@@ -1,0 +1,21 @@
+div class="js-position position col-sm-4" class=("js-needsAttention" if position.needs_attention) class=position.active_state data-id=position.id
+    
+  = link_to position_path(position.id), :class =>"position-inner" do
+    div class="position-title"
+      strong = position.name
+
+  div class="position-switch switch switch--small"
+    input type="checkbox" name="switch" class="switch-checkbox js-switch-active-inactive" id="myswitch-#{position.id}" checked=("checked" if position.active_state == "active")
+    label class="switch-label" for="myswitch-#{position.id}"
+
+  div class="position-options dropdown"
+    a href="" class="btn btn--round btn--flat icon icon--moreOptionsVert" id="positionOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+  
+    / Dropdown
+    ul class="dropdown-menu dropdown-menu--right" aria-labelledby="positionOptions"
+      li = link_to "Archive", set_position_state_path(position.id, 'archived'), :class => "js-set-state js-set-archived", :remote => true, :method => "patch", :data => {:state => "archived"}
+      li = link_to "Delete", set_position_state_path(position.id, 'deleted'), :class => "js-set-state js-set-deleted", :remote => true, :method => "patch", :data => {:state => "deleted"}
+      li = link_to "Edit plan", plan_path(position.id)
+      li = link_to "Edit settings", edit_position_path(position.id)
+      li style="display:none;" = link_to "Disable", set_position_state_path(position.id, 'inactive'), :class => "js-set-state js-set-inactive", :remote => true, :method => "patch", :data => {:state => "inactive"}
+      li style="display:none;" = link_to "Enable", set_position_state_path(position.id, 'active'), :class => "js-set-state js-set-active", :remote => true, :method => "patch", :data => {:state => "active"}

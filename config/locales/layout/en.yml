@@ -1,0 +1,4 @@
+en:
+  layouts:
+    application:
+      footer: "Footer goes here"

@@ -1,0 +1,35 @@
+/ Venture form
+.form
+  = form_for venture do |f|
+    .form-element
+      = f.label :name, :class => "inputLabel"
+      = f.text_field :name, :class => "inputControl", :required => true
+
+    .form-element
+      = f.label :description, :class => "inputLabel"
+      = f.text_area :description, :class => "inputControl"
+      
+    .form-element
+      = f.label :currency, :class => "inputLabel"
+      = f.select :currency, ["EUR", "USD"], {:selected => venture.currency}, {:class => "inputControl inputControl--select"}
+
+    .form-element
+      = f.label :vat, "Default VAT (%)", :class => "inputLabel"
+      = f.text_field :vat, :class => "inputControl js-maths js-integer"
+      
+    .form-element
+      = f.label :taxes_report_cycle, "VAT report cycle", :class => "inputLabel"
+      = f.select :taxes_report_cycle, options_for_select([['Monthly', "monthly"], ["Quaterly", "quaterly"], ["Yearly", "yearly"]], f.object.taxes_report_cycle), {}, {:class => "inputControl inputControl--select"}
+
+    .form-element
+      = f.submit :class => "btn btn--primary"
+
+    .form-element
+      button type="button" class="btn btn--primary btn--loading"
+        .loadingAnimation
+          .bounce1
+          .bounce2
+          .bounce3
+
+    .form-element
+      = link_to "Cancel", :back, :class => "btn btn--flat"

@@ -1,0 +1,62 @@
+.switch
+  position: relative
+  width: 58px
+  -webkit-user-select:none
+  -moz-user-select:none
+  -ms-user-select: none
+
+.switch-checkbox
+  display: none
+
+.switch-label
+  display: block
+  overflow: hidden
+  cursor: pointer
+  height: 26px
+  padding: 0
+  line-height: 26px
+  border: 1px solid #CCCCCC
+  border-radius: 26px
+  background-color: $shade-lighter
+  transition: all 0.2s ease-in
+
+.switch-label:before
+  content: ""
+  display: block
+  width: 26px
+  margin: 0px
+  background: #FFFFFF
+  position: absolute
+  top: 0
+  bottom: 0
+  right: 33px
+  border: 1px solid #CCCCCC
+  border-radius: 26px
+  transition: all 0.2s ease-in 0s 
+
+.switch-checkbox:checked + .switch-label
+  background: $primary url("icon-check-white.svg") no-repeat 30% center
+
+.switch-checkbox:checked + .switch-label, .switch-checkbox:checked + .switch-label:before
+  border-color: $primary
+
+.switch-checkbox:checked + .switch-label:before
+  right: 0px 
+  left: auto
+
+.switch--small
+  width: 45px
+
+.switch--small .switch-label
+  height: 20px
+  line-height: 20px
+  border-radius: 20px
+
+.switch--small .switch-checkbox:checked + .switch-label
+  background-position: 20% center
+  background-size: 14px
+
+.switch--small .switch-label:before
+  width: 20px
+  right: 28px
+  border-radius: 20px

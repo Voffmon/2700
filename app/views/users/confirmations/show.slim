@@ -1,0 +1,29 @@
+div class="primaryContent primaryContent--small"
+  div class="primaryContent-inner"
+    h2 class="u-centered u-flushTop"
+      = t(".headline")
+    .form
+      = form_for(resource, as: resource_name, url: confirm_path, html: { method: :patch }) do |f|
+        = devise_error_messages!
+        .form-element
+          = f.label :name, :class => "inputLabel"
+          = f.text_field :name, autofocus: true, :class => "inputControl"
+        
+        .form-element
+          = f.label :password, :class => "inputLabel"
+          = f.password_field :password, :class => "inputControl"
+        
+        .form-element
+          = f.label :password_confirmation, :class => "inputLabel"
+          = f.password_field :password_confirmation, :class => "inputControl"
+
+        .form-element
+          = f.hidden_field :confirmation_token, :value => @confirmation_token
+          = f.submit t(".confirm_account_button"), :class => "btn btn--primary"
+
+        .form-element
+          button type="button" class="btn btn--primary btn--loading"
+            .loadingAnimation
+              .bounce1
+              .bounce2
+              .bounce3

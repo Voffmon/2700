@@ -1,0 +1,124 @@
+/ Get configurations from helper
+- methods = methods_for_position(@position)
+- settings = settings_for_position(@position)
+- table = table_for_position(@position)
+
+- if (@position.sales_method.present? && @position.costs_method.present?) || methods.size <= 1
+  div class="plan"
+    / Planning form
+    = form_tag save_plan_path, :method => "PUT", :class => "js-plan-form"
+
+      div class="plan-header u-clearfix u-centered"
+      
+        / Hidden inputs
+        input type="hidden" name="year" value=@setup.year
+        input type="hidden" name="id" value=@position.id
+        input.js-dimension type="hidden" value=@category.dimension
+        input.js-sales-method type="hidden" value=@position.sales_method
+        input.js-costs-method type="hidden" value=@position.costs_method
+        
+        / Position name
+        / h1 class="settingsPage-header-title u-floatLeft u-flush"
+        /   = @position.name
+        /   = @setup.year
+
+        / Planning state  
+        / div class="form-element form-element--checkbox"
+        /   label class="inputLabel" Planning state
+
+          / select class="inputControl inputControl--select" name="planning_state"
+          /   option value="needs_attention" selected=("selected" if @position.planning_state == "needs_attention") Needs attention
+          /   option value="approved" selected=("selected" if @position.planning_state == "approved") Approved
+
+        div class="u-floatLeft dropdown"
+          a href="#" class="settingsPage-header-title" id="selectSetupYear" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+            = @position.name
+            |&nbsp;
+            = @setup.year
+            span class="caret"
+        
+          / Dropdown
+          ul class="dropdown-menu dropdown-menu--left" aria-labelledby="chartPresets"
+            - @position.find_in_setups.each do |position|
+              - setup = position.category.setup
+              li class=("active" if @setup.year == setup.year)
+                = link_to plan_path(position.id) do
+                  = position.name
+                  | &nbsp;
+                  = setup.year
+                  span class="u-floatRight" class=("lockedStatus" if setup.is_locked)
+              /li class="divider"
+              /li
+              /  a href="#" + Copy to new plan year
+
+        / Cancel and Save button
+        div class="u-floatRight"
+          / .form-element.form-element--checkbox.u-inline
+          /   .checkbox
+          /     label class="customCheckbox-label"
+          /       input type="checkbox" id="needsAttention" class="customCheckbox-input"
+          /       span class="customCheckbox-button"
+          /       label for="needsAttention" class="customCheckbox-content" Needs attention
+          
+          = link_to "Discard changes", position_path(@position.id), :class => "btn"
+          input type="submit" value="Save" class="btn btn--primary"
+
+      / Plan Settings
+      div class="plan-form u-clearfix"      
+        div class="form u-floatLeft"
+          div class="row js-settings"
+            - settings.each do |identifier, field|
+              div class="form-element"
+                label class="inputLabel" =field[:caption]
+                - if field[:type] == :select
+                  select.inputControl.inputControl--select class=("js-" + identifier.to_s) name="position[#{field[:name]}]" required=("required" if field[:required]) disabled=("true" if @setup.is_locked) class=("inputControl--disabled" if @setup.is_locked)
+                    - field[:options].each do |key, value|
+                      option value=key selected=("selected" if @position[field[:name]] == key.to_s) =value
+                - else
+                  input.inputControl.js-maths type="text" class=("js-" + identifier.to_s) class=(field[:format] == :integer ? "js-integer" : "js-decimal") class=("inputControl--disabled" if @setup.is_locked) name="position[#{field[:name]}]" value=(@position[field[:name]] ||= field[:default]) required=("required" if field[:required]) readonly=("readonly" if @setup.is_locked)
+        
+        - unless @setup.is_locked
+          .radioChoice.radioChoice--needsAttention.u-floatRight
+            label for="needsAttention" class="radioChoice-label"
+              =check_box "position", "needs_attention", {:class => "radioChoice-input", :id => "needsAttention"}, "true", "false"
+              .radioChoice-button
+                .radioChoice-content
+                  .radioChoice-headline Needs attention
+                
+                
+      / Plan Forecast Settings
+      - if @setup.is_locked
+        div class="plan-form u-clearfix forecast-settings"      
+          div class="form u-floatLeft"
+            div class="row js-settings"
+              - settings.each do |identifier, field|
+                div class="form-element"
+                  label class="inputLabel" =field[:caption]
+                  - if field[:type] == :select
+                    select.inputControl.inputControl--select class=("js-" + identifier.to_s) name="position[#{field[:name]}_forecast]"
+                      - field[:options].each do |key, value|
+                        option value=key selected=("selected" if @position[field[:name].to_s + "_forecast"] == key.to_s) =value
+                  - else
+                    input.inputControl.js-maths type="text" class=("js-" + identifier.to_s) class=(field[:format] == :integer ? "js-integer" : "js-decimal") name="position[#{field[:name]}_forecast]" value=(@position[field[:name].to_s + "_forecast"] ||= field[:default]) required=("required" if field[:required])
+        
+          .radioChoice.radioChoice--needsAttention.u-floatRight
+            label for="needsAttention" class="radioChoice-label"
+              =check_box "position", "needs_attention", {:class => "radioChoice-input", :id => "needsAttention"}, "true", "false"
+              .radioChoice-button
+                .radioChoice-content
+                  .radioChoice-headline Needs attention
+                      
+      div class="primaryContent-inner"
+
+        / Plan table
+        - if table.present?
+          = render :partial => "plan_table", :locals => {:position => @position, :setup => @setup, :table => table}
+          
+        / Change planning method
+        - if methods.size > 1
+          .plan-footer
+            = link_to "Change planning method", plan_method_path(@position.id)
+
+/ If no planning method is set, set directly in planning view
+- else
+  = render :partial => "plan_method", :locals => {:position => @position, :methods => methods}

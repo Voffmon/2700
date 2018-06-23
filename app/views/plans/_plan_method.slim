@@ -1,0 +1,47 @@
+div class="primaryContent primaryContent--small"
+  div class="primaryContent-inner"
+    h2 class="u-centered u-flushTop"
+      | Choose your planning methods
+
+    = form_tag save_plan_method_path
+      
+      input type="hidden" name="id" value=@position.id
+      
+      / Sales methods
+      .form-element
+        label class="inputLabel" How do you want to plan your sales? 
+         
+        - methods[:sales_methods].each do |method|
+          .radioChoice
+            label for="sales_method-#{method[:value]}" class="radioChoice-label"
+              input type="radio" name="sales_method" value=method[:value] class="radioChoice-input" id="sales_method-#{method[:value]}" checked=("checked" if position.sales_method == method[:value])
+              .radioChoice-button
+                .radioChoice-content
+                  .radioChoice-headline =method[:headline]
+                  .radioChoice-description =method[:description] 
+      
+      / Costs methods
+      .form-element
+        label class="inputLabel" How do you want to plan your direct costs?  
+        
+        - methods[:costs_methods].each do |method|
+          .radioChoice
+            label for="costs_method-#{method[:value]}" class="radioChoice-label"
+              input type="radio" name="costs_method" value=method[:value] class="radioChoice-input" id="costs_method-#{method[:value]}" checked=("checked" if position.costs_method == method[:value])
+              .radioChoice-button
+                .radioChoice-content
+                  .radioChoice-headline =method[:headline]
+                  .radioChoice-description =method[:description] 
+
+      .form-element
+        = submit_tag "Ok", :class => "btn btn--primary"
+
+      .form-element
+        button type="button" class="btn btn--primary btn--loading"
+          .loadingAnimation
+            .bounce1
+            .bounce2
+            .bounce3
+
+      .form-element
+        = link_to "Cancel", :back, :class => "btn btn--flat"

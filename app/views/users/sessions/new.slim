@@ -1,0 +1,41 @@
+div class="primaryContent primaryContent--small"
+  div class="primaryContent-inner"
+    h2 class="u-centered u-flushTop"
+      = t(".headline")
+    /.form-element
+    /  = link_to t(".sign_in_with_facebook"), user_facebook_omniauth_authorize_path, :class => "btn"
+    /.form-element
+    /  = link_to t(".sign_in_with_google"), user_google_oauth2_omniauth_authorize_path, :class => "btn"
+    br
+    h2 class="uppercaseLabel break u-centered"
+      span Or sign in with email
+    br
+    .form
+      = form_for(resource, as: resource_name, url: session_path) do |f|
+        .form-element
+          = f.label :email, :class => "inputLabel"
+          = f.email_field :email, autofocus: true, :class => "inputControl"
+        .form-element
+          = f.label :password, :class => "inputLabel"
+          = f.password_field :password, autocomplete: "off", :class => "inputControl"
+          
+        - if devise_mapping.rememberable?
+          .form-element.form-element--checkbox    
+            .checkbox
+              label class="customCheckbox-label"
+                = f.check_box :remember_me, :class => "customCheckbox-input"
+                span class="customCheckbox-button"
+                = f.label :remember_me, :class => "customCheckbox-content"
+
+        .form-element
+          = f.submit t(".sign_in_button"), :class => "btn btn--primary"
+
+        .form-element
+          button type="button" class="btn btn--primary btn--loading"
+            .loadingAnimation
+              .bounce1
+              .bounce2
+              .bounce3
+
+    br
+    = render "users/shared/links"

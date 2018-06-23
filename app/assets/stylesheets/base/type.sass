@@ -1,0 +1,126 @@
+$fontFamily-main: "Open Sans","Helvetica Neue",Helvetica,sans-serif
+
+@mixin font-main--n3()
+  font-family: $fontFamily-main
+  font-weight: 300
+  font-style: normal
+
+@mixin font-main--i3()
+  font-family: $fontFamily-main
+  font-weight: 300
+  font-style: italic
+
+@mixin font-main--n4()
+  font-family: $fontFamily-main
+  font-weight: 400
+  font-style: normal
+
+@mixin font-main--i4()
+  font-family: $fontFamily-main
+  font-weight: 400
+  font-style: italic
+
+@mixin font-main--n6()
+  font-family: $fontFamily-main
+  font-weight: 600
+  font-style: normal
+
+@mixin font-main--i6()
+  font-family: $fontFamily-main
+  font-weight: 600
+  font-style: italic
+
+@mixin font-main--n7()
+  font-family: $fontFamily-main
+  font-weight: 700
+  font-style: normal
+
+@mixin font-main--i7()
+  font-family: $fontFamily-main
+  font-weight: 700
+  font-style: italic
+
+
+// Letter-Spacing Scale
+// --------------------------------------------------
+
+$letterSpacing-narrower: -0.3rem
+$letterSpacing-narrow: -0.1rem
+$letterSpacing-wide: 0.07rem
+$letterSpacing-wider: 0.1rem
+$letterSpacing-widest: 0.2rem
+
+// Font-Size Scale
+// --------------------------------------------------
+
+$fontSize-jumbo: 4rem
+$fontSize-largest: 3.1rem
+$fontSize-larger: 2.4rem
+$fontSize-large: 2rem
+$fontSize-medium: 1.6rem
+$fontSize-base: 1.4rem
+$fontSize-small: 1.2rem
+$fontSize-smaller: 1.1rem
+$fontSize-smallest: 0.8rem
+
+// Font-Size Applications
+// --------------------------------------------------
+
+$fontSize--h1:                $fontSize-jumbo
+
+$fontSize--h2:                $fontSize-largest
+
+$fontSize--h3:                $fontSize-larger
+
+$fontSize--h4:                $fontSize-large
+
+$fontSize--h5:                $fontSize-medium
+$fontSize--largeBtn:          $fontSize-medium
+$fontSize--headerNav:         $fontSize-medium
+$fontSize--breadcrumbs:       $fontSize-medium
+
+$fontSize--h6:                $fontSize-base
+$fontSize--body:              $fontSize-base
+
+$fontSize--secondaryNav:      $fontSize-small
+$fontSize--smallBtn:          $fontSize-small
+$fontSize--smallInput:        $fontSize-small
+$fontSize--smallPrint:        $fontSize-small
+$fontSize--tooltip:           $fontSize-small
+
+$fontSize--uppercaseLabel:    $fontSize-smaller
+
+// Typography Mixins
+// --------------------------------------------------
+
+@mixin uppercaseLabel()
+  @include font-main--n6()
+  text-transform: uppercase
+  font-size: $fontSize--uppercaseLabel
+  letter-spacing: $letterSpacing-wider
+
+.uppercaseLabel
+  @include uppercaseLabel()
+
+.uppercaseLabel--light
+  color: $shade-base
+
+.break
+  z-index: 0
+  position: relative
+
+.break:before
+  content: ''
+  position: absolute
+  top: 50%
+  left: 0
+  right: 0
+  border-bottom: 1px solid $border--box
+  z-index: -1
+
+.break>span
+  display: inline-block
+  padding: 2px 15px
+  background: $paper
+  border-radius: 12px
+  border: 1px solid $border--box

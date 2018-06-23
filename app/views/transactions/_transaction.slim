@@ -1,0 +1,14 @@
+tr.js-transaction
+  td
+    span class="transactionIcon transactionIcon--positiveSum"
+    span class="transactionIcon transactionIcon--negativeSum"
+  td =transaction.date
+  td =transaction.position.name
+  td =transaction.title
+  td =transaction.position.category.name
+  td =number_to_currency(transaction.amount)
+  td =transaction.vat.to_s + "%"
+  td =number_to_currency(transaction.amount - transaction.amount * transaction.vat / 100)
+  td
+    = link_to "Edit", edit_transaction_path(transaction.id), :style => "margin-right:10px"
+    = link_to "Delete", transaction_path(transaction.id), :remote => true, :method => :delete, :class => "js-delete-transaction"

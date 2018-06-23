@@ -1,0 +1,8 @@
+/ New Category
+.newCategory
+	= link_to "+ New Category", "#", :class => "js-show-category-form"
+	= form_for Category.new, :remote => true, :html => {:class => "js-new-category-form", :style => "display:none;"} do |f|
+	  = f.hidden_field :setup_id, :value => setup.id
+	  = f.hidden_field :dimension, :value => dimension
+	  = f.text_field :name, :placehodler => "Category name", :class => "js-category-name inputControl inputControl--sm"
+	  = f.submit "Create", :class => "btn btn--primary btn--sm"

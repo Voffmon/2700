@@ -1,0 +1,8 @@
+p
+  | Welcome 
+  = user.email
+  | !
+p
+  | You can confirm your account email through the link below:
+p
+  = link_to 'Confirm my account', confirm_url(user, confirmation_token: token, locale: 'en')

@@ -1,0 +1,60 @@
+div class="primaryContent primaryContent--small"
+  div class="primaryContent-inner"
+    h2 class="u-centered u-flushTop"
+      = t(".headline")
+    .form
+      = form_for(resource, as: resource_name, url: edit_registration_path, html: { method: :put }) do |f|
+        = devise_error_messages!
+        .form-element
+          = f.label :name, autofocus: true, :class => "inputLabel"
+          = f.text_field :name, :class => "inputControl"
+          
+        .form-element
+          = f.label :language, "Choose your language", :class => "inputLabel"
+          = f.select :language, options_for_select([["Deutsch", "de"], ['English', "en"]], f.object.language), {}, {:class => "inputControl inputControl--select"}
+
+        .form-element
+          = f.label :email, :class => "inputLabel"
+          = f.email_field :email, :class => "inputControl"
+        
+        - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+          .form-element
+            | Currently waiting confirmation for: 
+            = resource.unconfirmed_email
+        
+        .form-element
+          = f.label :password, :class => "inputLabel"
+          = t(".password_hint")
+          = f.password_field :password, autocomplete: "off", :class => "inputControl"
+        
+        .form-element
+          = f.label :password_confirmation, :class => "inputLabel"
+          = f.password_field :password_confirmation, autocomplete: "off", :class => "inputControl"
+        
+        .form-element
+          = f.submit t(".update_button"), :class => "btn btn--primary"
+
+        .form-element
+          button type="button" class="btn btn--primary btn--loading"
+            .loadingAnimation
+              .bounce1
+              .bounce2
+              .bounce3
+
+
+    | Connect with Google, Facebook, Xing or LinkedIn
+
+    - resource_class.omniauth_providers.each do |provider|
+      - if !@connected_providers.include?(provider.to_s)
+        .form-element
+          = link_to_if provider == "google_oauth2", "Connect with Facebook", user_facebook_omniauth_authorize_path
+          = link_to_if provider == "facebook", "Connect with Google", user_google_oauth2_omniauth_authorize_path
+      - else
+          .form-element
+            | Already connected with #{provider.to_s.titleize}
+
+    h2 class="centered"
+      = t(".unhappy_headline")
+    .form-element
+      = button_to t(".cancel_button"), registration_path, data: { confirm: t(".cancel_confirmation") }, method: :delete, :class => "btn btn--primary"
+      / = link_to t(".back"), :back

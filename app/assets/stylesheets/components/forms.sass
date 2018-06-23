@@ -1,0 +1,47 @@
+.form
+
+.form-element
+  margin-bottom: 1.8rem
+
+.form-element--customRadio .customRadio, .form-element--checkbox .checkbox
+  margin-top: 0.6rem
+
+.form-element .inputControl,
+.form-element select,
+.form-element .btn
+  width: 100%
+
+.form-element-errorMsg
+  color: $alert
+  margin-top: 0.5rem
+
+.form-element--error .inputControl,
+.form-element--error .inputControl:focus
+  border-color: $alert
+
+.form-element--inline .inputControl,
+.form-element--inline select,
+.form-element--inline .btn
+  width: auto
+
+@media (min-width: 768px)
+  .form--inline .inputControl
+    display: inline-block
+    vertical-align: middle
+    width: auto
+  
+  .form--inline .form-element
+    display: inline-block
+    margin-bottom: 0
+    vertical-align: middle
+  
+  .form--horizontal .inputLabel
+    margin-bottom: 0
+    padding-top: 1.1rem
+    text-align: right
+  
+  .form--horizontal .form-element
+    margin-left: -15px
+    margin-right: -15px
+  
+

@@ -1,0 +1,78 @@
+.btn
+  max-width: 100%
+  border-radius: 0.4rem
+  border: 1px solid $border--input
+  border-bottom-color: darken($border--input,7%)
+  padding: 1rem
+  background-color: $paper
+  padding-left: 2rem
+  padding-right: 2rem
+  text-decoration: none
+  color: $text
+  display: inline-block
+  font-family: inherit
+  font-weight: inherit
+  line-height: inherit
+  white-space: normal
+  vertical-align: middle
+  outline: none
+  -webkit-appearance: none
+  -moz-appearance: none
+  box-sizing: border-box
+  text-align: center
+  -webkit-touch-callout: none /* iOS Safari */
+  -webkit-user-select: none   /* Chrome/Safari/Opera */
+  -khtml-user-select: none    /* Konqueror */
+  -moz-user-select: none      /* Firefox */
+  -ms-user-select: none       /* IE/Edge */
+
+.btn:hover
+  text-decoration: none
+
+.btn:active,
+.btn--loading
+  opacity: 0.3
+
+.btn--lg
+  padding-top: 1.4rem
+  padding-bottom: 1.4rem
+  font-size: $fontSize--largeBtn
+
+.btn--sm
+  padding-top: 0.6rem
+  padding-bottom: 0.6rem
+  font-size: $fontSize--smallBtn
+
+.btn--primary
+  background-color: $primary
+  border-color: $primary
+  color: $paper
+
+.btn--secondary
+  background-color: #a6a6a6
+  border-color: #a6a6a6
+  color: $paper
+
+.btn--tertiary
+  background-color: $secondary
+  border-color: $secondary
+  color: $paper
+
+.btn--flat
+  background: none
+  border: none
+  color: $primary
+
+// loading state
+
+.btn.btn--loading
+  cursor: default
+
+
+.btn.btn--loading .loadingAnimation > div
+  background-color: $shade-base
+
+.btn--primary.btn--loading .loadingAnimation > div ,
+.btn--secondary.btn--loading .loadingAnimation > div,
+.btn--tertiary.btn--loading .loadingAnimation > div
+  background-color: $paper

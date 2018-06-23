@@ -1,0 +1,87 @@
+*, *:before, *:after
+  -moz-box-sizing: border-box
+  -webkit-box-sizing: border-box
+  box-sizing: border-box
+
+html
+  font-size: 10px
+  height: 100%
+  -webkit-font-smoothing: subpixel-antialiased
+
+body
+  @include font-main--n4()
+  background-color: $bg--body
+  font-size: $fontSize--body
+  color: $text
+  line-height: 1.4
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5,  h6, .h6
+  @include font-main--n3()
+
+
+h1, .h1
+  font-size: $fontSize--h1
+
+
+h2, .h2
+  font-size: $fontSize--h2
+
+
+h3, .h3
+  font-size: $fontSize--h3
+
+
+h4, .h4
+  font-size: $fontSize--h4
+
+
+h5, .h5
+  font-size: $fontSize--h5
+
+
+h6, .h6
+  font-size: $fontSize--h6
+
+a
+  color: $primary
+  text-decoration: none
+  -webkit-tap-highlight-color: rgba(0, 132, 255, 0.1)
+
+b
+  @include font-main--n6()
+
+em
+  @include font-main--i4()
+ 
+i
+  @include font-main--i4()
+ 
+small
+  font-size: $fontSize--smallPrint
+ 
+strong
+  @include font-main--n6()
+
+strong i
+  @include font-main--i6()
+ 
+sub
+
+ 
+sup
+
+ 
+ins
+
+ 
+del
+
+ 
+mark
+
+
+blockquote
+
+
+img
+  max-width: 100%

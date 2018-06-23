@@ -1,0 +1,3 @@
+li.graphPreset
+  a.graphPreset-link.js-select-preset href="#" data-preset=preset.data =preset.name
+  = link_to "", preset_path(preset.id), :class => "graphPreset-delete js-delete-preset icon icon--delete", :remote => true, :method => "delete"

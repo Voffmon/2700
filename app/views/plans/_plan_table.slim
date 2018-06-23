@@ -1,0 +1,75 @@
+div class="plan-table"
+  
+  / Column headings
+  div class="plan-row row"
+    div class="plan-cell plan-cell--first"
+    - table.each do |identifier, column|
+      div class="plan-cell u-centered uppercaseLabel uppercaseLabel--light" =column[:caption]
+
+  / Total sums
+  div class="plan-row row"
+    div class="plan-cell plan-cell--first u-right"
+      span class=" uppercaseLabel uppercaseLabel--light" style="padding-right:13px" Total
+      
+    - table.each do |identifier, column|
+      div class="plan-cell u-centered"
+        strong.js-total class=("js-total-" + identifier.to_s) class=("js-decimal" if column[:format] == :decimal) class=("js-integer" if column[:format] == :integer)
+  
+  / Total sums for locked
+  - if @setup.is_locked
+    div class="plan-row row"
+      div class="plan-cell plan-cell--first u-right"
+        span class=" uppercaseLabel uppercaseLabel--light" style="padding-right:13px" Total Forecast
+        
+      - table.each do |identifier, column|
+        div class="plan-cell u-centered"
+          strong.js-total-forecast class=("js-total-" + identifier.to_s) class=("js-decimal" if column[:format] == :decimal) class=("js-integer" if column[:format] == :integer)
+  
+                  
+  / Months
+  - plan_months = position.plan_months
+  - (1..12).step do |month|
+    
+    - plan_month = plan_months.find {|plan_month| plan_month.month == month }
+  
+    div class="plan-row row js-plan-row"
+      div class="plan-cell plan-cell--first"
+        span class="yearLabel"
+          span =Date::MONTHNAMES[month][0..2]
+
+      / Print row
+      - table.each_with_index do |(identifier, column), index|
+        div class="plan-cell" class=("plan-cell--breakpoint" if plan_month.present? && plan_month[column[:name].to_s + "_is_user_generated"] && !plan_month[column[:readonly]] && !setup.is_locked)
+          input.inputControl.js-maths autocomplete="off" type="text" class=("js-col-" + identifier.to_s) class=("js-decimal" if column[:format] == :decimal) class=("js-integer" if column[:format] == :integer) class=("js-autofill" if column[:autofill] == true) class=("inputControl--disabled" if column[:readonly] || setup.is_locked) readonly=("readonly" if column[:readonly] || setup.is_locked) name=("plan_month[#{month}][" + column[:name].to_s + "]" if !column[:name].blank?) value=(plan_month.present? ? (plan_month[column[:name].to_s].to_s.gsub(".", ",")) : "") tabindex=(month if !setup.is_locked && index == 0)
+          =check_box "plan_month[#{month}]", column[:name].to_s + "_is_user_generated", {:class => "js-is-user-generated", :checked => plan_month.present? && plan_month[column[:name].to_s + "_is_user_generated"]}
+          
+      div class="plan-cell plan-cell--last"
+        a.js-toggle-note.plan-editNoteLink href="#" style=("display:none;" if plan_month.blank? || plan_month.note == "")
+        a.js-toggle-note.plan-addNoteLink href="#" style=("display:none;" if plan_month.present? && plan_month.note != "")
+
+      / Value note for each month
+      div class="plan-note"
+        textarea name="plan_month[#{month}][note]" placeholder="Your note goes here..." class="inputControl" style="width:100%;margin:10px 0;"
+          = (plan_month.present? ? plan_month.note : "")
+
+    / Forecast
+    - if setup.is_locked
+      div class="plan-row row plan-row--forecast js-plan-row-forecast"
+        div class="plan-cell plan-cell--first"
+          span class="yearLabel yearLabel--forecast"
+            span = Date::MONTHNAMES[month][0..2]
+            
+        / Print row
+        - table.each_with_index do |(identifier, column), index|
+          div class="plan-cell" class=("plan-cell--breakpoint" if plan_month.present? && plan_month[column[:name].to_s + "_is_user_generated_forecast"] && !plan_month[column[:readonly].to_s + "_forecast"])
+            input.inputControl.js-maths autocomplete="off" type="text" class=("js-col-" + identifier.to_s) class=("js-decimal" if column[:format] == :decimal) class=("js-integer" if column[:format] == :integer) class=("js-autofill" if column[:autofill] == true) class=("inputControl--disabled" if column[:readonly]) readonly=("readonly" if column[:readonly]) name=("plan_month[#{month}][" + column[:name].to_s + "_forecast]" if !column[:name].blank?) value=(plan_month.present? ? (plan_month[column[:name].to_s + "_forecast"].to_s.gsub(".", ",")) : "") tabindex=(month if setup.is_locked && index == 0)
+            =check_box "plan_month[#{month}]", column[:name].to_s + "_is_user_generated_forecast", {:class => "js-is-user-generated", :checked => plan_month.present? && plan_month[column[:name].to_s + "_is_user_generated_forecast"]}
+      
+        div class="plan-cell plan-cell--last"
+          a.js-toggle-note.plan-editNoteLink href="#" style=("display:none;" if plan_month.blank? || plan_month.note_forecast.blank? || plan_month.note_forecast == "")
+          a.js-toggle-note.plan-addNoteLink href="#" style=("display:none;" if plan_month.present? && plan_month.note_forecast != "")
+
+        / Forecast note for each month
+        div class="plan-note"
+          textarea name="plan_month[#{month}][note_forecast]" placeholder="Your note goes here..." class="inputControl" style="width:100%;margin:10px 0;"
+            = (plan_month.present? ? plan_month.note_forecast : "")

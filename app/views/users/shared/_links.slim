@@ -1,0 +1,15 @@
+- if controller_name != 'confirmations'
+  .form-element.u-centered
+    = link_to t(".resend_confirmation_link"), confirmation_path
+
+- if controller_name != 'passwords' && controller_name != 'registrations'
+  .form-element.u-centered
+    = link_to t(".reset_password_link"), password_path
+
+- if controller_name != 'registrations'
+  .form-element.u-centered
+    = link_to t(".sign_up_link"), registration_path
+
+- if controller_name != 'sessions'
+  .form-element.u-centered
+    = link_to t(".sign_in_link"), session_path

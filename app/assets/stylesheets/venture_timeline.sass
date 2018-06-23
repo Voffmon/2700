@@ -1,0 +1,121 @@
+.timeline
+  padding-left: 20px
+  margin-top: 10px
+  @media (min-width: 1220px)
+    padding-left: 80px
+    padding-right: 80px
+
+.timeline-dot
+  border-radius: 50%
+  height: 13px
+  width: 13px
+  border: 1px solid $primary
+  background-color: $shade-lightest
+  display: block
+
+.timelineAxis
+  height: 13px
+  width: 100%
+  position: relative
+
+.timelineAxis-line
+  height: 1px
+  margin-top: 6px
+  background-color: $primary
+  display: block
+  float: left
+  width: 100%
+
+.timelineAxis-event
+  position: absolute
+  cursor: pointer
+  top: 0
+
+.timeline-dot:hover,
+.timelineList-item:hover .timeline-dot
+  background-color: $primary
+
+.timeline-content
+  height: 0
+  margin-left: -6px
+  overflow: hidden
+
+.timeline-content.is-expanded
+  height: auto
+
+.timelineList-header
+  padding-right: 80px
+  padding-top: 20px
+  padding-left: 6px
+
+.timelineList-item
+  padding: 0.4em 0
+  padding-left: 35px
+  padding-right: 80px
+  margin-bottom: 2px
+  position: relative
+  cursor: default
+  border-radius: 3px 0 0 3px
+
+.timelineList-item:hover
+  background: lighten($primary--light, 2%)
+  color: $primary
+
+.timelineList-item .timeline-dot
+  position: absolute
+  left: 6px
+  top: 50%
+  margin-top: -6.5px
+
+.timelineList-item-date
+  display: inline-block
+  width: 140px
+
+.timelineList-item-title
+  display: inline-block
+
+.timelineList-item a
+  margin-left: 10px
+  @include uppercaseLabel()
+
+.timelineList-addEventForm
+  padding-left: 6px
+  padding-top: 10px
+  padding-bottom: 10px
+
+.timelineList-addEventForm input,
+.timelineList-addEventForm select
+  margin-right: 4px
+
+.expand-timeline
+  margin-top: 20px
+  text-align: center
+  height: 25px
+  cursor: pointer
+  border-top: 1px solid darken($border--box, 4%)
+
+.expand-timeline>span
+  display: inline-block
+  border-radius: 0 0 5px 5px
+  border: 1px solid darken($border--box, 4%)
+  border-top: 0
+  height: 25px
+  width: 80px
+  background-color: $paper
+
+.expand-timeline>span:before
+  content: ""
+  height: 23px
+  width: 78px
+  background: url("icon-arrow-down-small.svg") no-repeat center center
+  display: block
+
+.expand-timeline.is-expanded>span:before
+  transform: rotate(180deg)
+  -webkit-transform: rotate(180deg)
+  -moz-transform: rotate(180deg)
+  -o-transform: rotate(180deg)
+
+.expand-timeline:hover,
+.expand-timeline:hover>span
+  border-color: darken($border--box, 9%)

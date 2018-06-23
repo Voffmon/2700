@@ -1,0 +1,151 @@
+table.treetable
+  border-collapse: collapse
+  border-spacing: 0
+  line-height: 28px
+  margin: 0
+  width: 100%
+
+table.treetable thead tr th
+  @include uppercaseLabel()
+  text-align: left
+  color: $shade-base
+
+table.treetable tbody tr td
+  cursor: default
+
+table.treetable span
+  background-position: center left
+  background-repeat: no-repeat
+
+table.treetable tr.collapsed span.indenter a
+  background-image: url(indenter.svg)
+
+table.treetable tr.expanded span.indenter a
+  background-image: url(indenter-open.svg)
+
+table.treetable tr span.indenter a
+  outline: none /* Expander shows outline after upgrading to 3.0 (#141) */
+
+table.treetable span.indenter
+  display: block
+  margin: 0
+  padding: 0
+  float: left
+
+  /* Disable text selection of nodes (for better D&D UX) */
+  user-select: none
+  -khtml-user-select: none
+  -moz-user-select: none
+  -o-user-select: none
+  -webkit-user-select: none
+
+  /* Force content-box box model for indenter (Bootstrap compatibility) */
+  -webkit-box-sizing: content-box
+  -moz-box-sizing: content-box
+  box-sizing: content-box
+
+  width: 28px
+  height: 28px
+
+table.treetable span.indenter a
+  background-position: left center
+  background-repeat: no-repeat
+  display: inline-block
+  text-decoration: none
+  width: 24px
+
+.row--highlighted
+  font-weight: 600
+
+// .row--highlighted:before
+//   content: ""
+//   position: absolute
+//   left: 0
+//   top: 0
+//   width: 100%
+//   border-top: 1px solid $shade-base
+
+.expandableTable
+  padding: 0 20px
+  background-image: linear-gradient(rgba(255,255,255,1) 50%, darken($shade-lightest, 3%) 50%)
+  background-size: 56px 56px
+  @media (min-width: 1220px)
+    padding: 0 80px
+
+.rowSelect
+  height: 20px
+  width: 20px
+  margin: 4px 8px 4px 0
+  display: block
+  border-radius: 14px
+  float: left
+
+.rowSelect-label
+  cursor: pointer
+
+.rowSelect-label--disabled
+  cursor: default
+
+.rowSelect-input
+  display: none
+
+.rowSelect-input:disabled+.rowSelect-button
+  cursor: default
+  opacity: 0.5
+
+.rowSelect-button
+  border: 1px solid rgba(0, 0, 0, 0.25)
+  border-radius: 10px
+  display: inline-block
+  height: 20px
+  width: 20px
+  margin-right: 0.2em
+  vertical-align: top
+
+.rowSelect-label.checked .rowSelect-button, .rowSelect-input:checked+.rowSelect-button, .rowSelect-button.rowSelect-button--disabled-checked
+  background-color: $primary
+  border-color: rgba(0, 0, 0, 0.1)
+  box-shadow: none
+  position: relative
+
+.rowSelect--color01 .rowSelect-label.checked .rowSelect-button,
+.rowSelect--color01 .rowSelect-input:checked+.rowSelect-button,
+.rowSelect--color01 .rowSelect-button.rowSelect-button--disabled-checked
+  background-color: $rowSelectcolor--01
+
+.rowSelect--color02 .rowSelect-label.checked .rowSelect-button,
+.rowSelect--color02 .rowSelect-input:checked+.rowSelect-button,
+.rowSelect--color02 .rowSelect-button.rowSelect-button--disabled-checked
+  background-color: $rowSelectcolor--02
+
+.rowSelect--color03 .rowSelect-label.checked .rowSelect-button,
+.rowSelect--color03 .rowSelect-input:checked+.rowSelect-button,
+.rowSelect--color03 .rowSelect-button.rowSelect-button--disabled-checked
+  background-color: $rowSelectcolor--03
+
+.rowSelect-label.checked .rowSelect-button .rowSelect__text, .rowSelect-input:checked+.rowSelect-button .rowSelect__text, .rowSelect-button.rowSelect-button--disabled-checked .rowSelect__text
+  display: none !important
+
+.rowSelect-label.checked .rowSelect-button:after, .rowSelect-input:checked+.rowSelect-button:after, .rowSelect-button.rowSelect-button--disabled-checked:after
+  background-size: 65%
+  bottom: 0
+  content: ''
+  height: 100%
+  left: 0
+  position: absolute
+  right: 0
+  top: 0
+  width: 100%
+
+.rowSelect-label
+  -moz-user-select: none
+  -ms-user-select: none
+  -webkit-tap-highlight-color: transparent
+  -webkit-user-select: none
+  user-select: none
+
+.firstCell
+  width: 260px
+  overflow: hidden
+  text-overflow: ellipsis
+  white-space: nowrap

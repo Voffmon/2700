@@ -1,0 +1,39 @@
+/ Position form
+div class="primaryContent primaryContent--small"
+  div class="primaryContent-inner"
+    h2 class="u-centered u-flushTop"
+      |New position
+
+    = form_for position do |f|
+      
+      input type="hidden" name="category_id" value=position.category_id
+      
+      / Name
+      .form-element
+        = f.label :name, :class => "inputLabel"
+        = f.text_field :name, :class => "inputControl", :required => true
+      
+      / VAT
+      .form-element
+        label class="inputLabel" VAT (in %)
+        = f.text_field :vat, :value => (position.vat ||= position.category.setup.venture.vat), :class => "inputControl"
+          
+      / Additional Funding rules
+      - if @category.dimension == "funding"
+        .form-element
+          = f.check_box :has_to_be_repayed
+          label class="inputLabel" Has to be repaid?
+  
+      / Submit
+      .form-element
+        = f.submit :class => "btn btn--primary"
+
+      .form-element
+        button type="button" class="btn btn--primary btn--loading"
+          .loadingAnimation
+            .bounce1
+            .bounce2
+            .bounce3
+
+      .form-element
+        = link_to "Cancel", :back, :class => "btn btn--flat"

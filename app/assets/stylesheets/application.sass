@@ -1,0 +1,783 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_self
+ */
+
+
+@import 'base/colors'
+@import 'base/type'
+@import 'base/z-index'
+
+@import 'vendor/normalize'
+@import 'base/base'
+
+@import 'base/utilities'
+@import 'base/grid'
+@import 'base/animations'
+
+@import 'components/main-nav'
+@import 'components/secondary-nav'
+@import 'components/buttons'
+@import 'components/dropdowns'
+@import 'components/inputs'
+@import 'components/forms'
+@import 'components/tooltips'
+@import 'components/avatars'
+@import 'components/loading-animations'
+@import 'components/accordion'
+@import 'components/radio-choices'
+@import 'components/tags'
+@import 'components/switch'
+
+@import 'venture_timeline'
+@import 'venture_treetable'
+
+
+// Sebi:
+.btn--loading
+  display: none
+
+.plan-note
+  display: none
+
+.transactionForm
+  display: none
+
+.modal-bg
+  display: none
+
+.modal
+  display: none
+
+.js-is-user-generated
+  display: none
+
+.js-reset-autofill
+  display: none
+
+body,
+html
+  min-width: 1024px
+
+.primaryContent
+  background: $bg--primaryContent
+  margin: 0 auto 50px auto
+  @media (min-width: 1220px)
+    border-radius: 6px
+
+.primaryContent-inner
+  padding: 30px
+
+.primaryContent--small
+  width: 460px
+
+.primaryContent--medium
+  max-width: 940px
+
+.primaryContent--large
+  max-width: 1220px
+
+.primaryContent--scroll
+  max-height: 88vh
+  overflow-y: scroll
+  padding-top: 100px
+
+.primaryContent--large .primaryContent-inner
+  padding: 30px 80px
+
+.primaryContent--small .primaryContent-inner
+  padding: 30px
+
+.venture
+  padding: 45px 80px
+  display: block
+  color: $text
+
+.ventureHeader
+  padding: 45px 20px 82px 20px
+  position: relative
+  @media (min-width: 1220px)
+    padding-left: 80px
+    padding-right: 80px
+
+.detailHeader
+  padding: 45px 80px 60px 80px
+  position: relative
+  border-bottom: 1px solid $border--box
+
+.ventureSettings
+  background: url('icon-settings.svg') no-repeat center center
+  width: 30px
+  height: 30px
+  display: block
+
+.ventureHeader-title
+
+
+.ventureHeader-description
+  max-width: 400px
+
+.ventureHeader-link
+  margin-right: 20px
+  color: $shade-base
+
+
+.settingsPage-header
+  padding: 30px
+  box-shadow: 0 1px 0 rgba(0,0,0,0.1)
+  position: relative
+  z-index: 5
+
+.settingsPage-header--fixed
+  position: fixed
+  top: 51px
+  left: 0
+  right: 0
+  margin: 0 30px
+  background-color: $paper
+  border-radius: 6px 6px 0 0
+
+.settingsPage-header-title
+  font-size: 20px
+  @include font-main--n6()
+  height: 40px
+  line-height: 40px
+  color: $text
+
+.settingsPage-header-title--blue
+  color: $primary
+
+.settingsPage-header-title .icon--arrowLeft
+  padding-left: 30px
+  position: relative
+  margin-left: -11px
+
+.settingsPage-header-dropdown .caret
+  background-image: url('icon-arrow-down-small-grey.svg')
+
+.lockedStatus
+  height: 19px
+  width: 19px
+  background: url('icon-lock-grey.svg') no-repeat center center
+
+
+.settingsPage-header-link
+  margin-left: 20px
+
+.dimension-title
+  padding: 20px 30px
+  margin-top: -1px
+  background: $paper
+  border-bottom: 1px solid $border--box
+
+.dimension-title-bubble
+  font-size: 1.2rem
+  display: inline-block
+  vertical-align: middle
+  padding: 4px 16px
+  margin-left: 17px
+  margin-top: -5px
+  background: $shade-lighter
+  border-radius: 15px
+  color: $text
+
+.dimension-content
+  border-bottom: 1px solid $border--box
+  background: $shade-lightest
+
+.dimension-inner
+  padding: 30px 30px 0 30px
+
+.newCategory
+  padding: 0 30px 30px 30px
+
+.newCategory input
+  margin-right: 4px
+
+.break.category>span,
+.break.category:before
+  border-color: darken($border--box, 3%) !important
+
+.categoryLabel
+  color: $text
+  cursor: text
+
+.categoryLabel-form input
+  padding: 0
+  margin: 0
+  outline: 0
+  border: none
+  text-align: center
+  width: 200px
+
+.category-actions
+  display: none
+  padding: 0 20px
+
+.category-actions,
+.break > .category-actions
+  position: absolute
+  right: 0
+  top: -4px
+  border-radius: 0
+  border: none
+  background: $shade-lightest
+
+.category-actions a
+  color: $shade-base
+  margin-left: 4px
+  opacity: 0.3
+  display: block
+  height: 30px
+  width: 30px
+  position: relative
+  float: right
+
+.category-actions a:hover
+  opacity: 1
+
+.category:hover .category-actions
+  display: block
+
+.positions
+  width: 100%
+  min-height: 155px
+
+.position
+  margin-bottom: 30px
+  position: relative
+
+.position.archived,
+.position.deleted
+  display: none
+
+.position.inactive .position-inner
+  background: none
+
+.position.inactive .position-title
+  color: $shade-base
+
+.position.inactive .position-options .btn--round
+  background: none
+  opacity: 0.5
+
+.position.inactive .position-options .btn--round:hover
+  opacity: 1
+
+.position-ghost .position-title,
+.position-ghost .position-switch,
+.position-ghost .position-options,
+.position-ghost .position-status
+  display: none
+
+.position-ghost .position-inner,
+.position-ghost .position-inner:hover
+  background: $primary--light
+  border-color: $primary
+  opacity: 0.2
+
+.position-inner
+  display: block
+  border: 1px solid $border--box
+  border-radius: 5px
+  background: $paper
+  padding: 20px 25px
+  height: 120px
+
+.position-inner:hover
+  border-color: darken($border--box, 5%)
+
+.position-title
+  color: $text
+  position: relative
+
+.position.js-needsAttention .position-title:before
+  content: ""
+  height: 10px
+  width: 10px
+  border-radius: 5px
+  background: $secondary
+  position: absolute
+  left: -14px
+  top: 5px
+
+.position-options,
+.position-switch
+  position: absolute
+
+.position-switch
+  left: 40px
+  bottom: 20px
+
+.position-options
+  right: 30px
+  top: 15px
+
+.position-options-link
+  color: $shade-base
+  font-size: 24px
+  height: 40px
+  width: 50px
+  line-height: 40px
+  display: block
+  text-align: center
+
+.position-options-link:hover,
+.position-options.open .position-options-link
+  color: $text
+
+.position--newPosition
+
+.position--newPosition .position-inner
+  border: 1px solid $border--box
+  background: none
+  display: block
+  background: url("icon-plus-grey.svg") no-repeat center center
+
+.position--newPosition .position-inner:hover
+  background: url("icon-plus-blue.svg") no-repeat center center
+  border-color: darken($border--box, 5%)
+  background-color: #fff
+
+.positionList-item
+  padding: 30px
+  border-top: 1px solid $border--box
+
+.positionList-item-title
+  font-size: 1.8rem
+
+.mainChart
+  background: $shade-lightest
+  padding-top: 20px
+  margin-bottom: 50px
+  border-bottom: 1px solid $border--box
+
+.chartTags
+  padding-top: 25px
+  padding-bottom: 25px
+  @media (min-width: 1220px)
+    padding-bottom: 50px
+
+.transactionForm
+  background: rgb(248,248,248)
+  padding: 30px
+  border-top: 1px solid $border--box
+  border-bottom: 1px solid $border--box
+
+.transactionNav
+
+.transactionNav .secondaryNav
+  position: relative
+
+.transactionNav .secondaryNav-inner
+  padding: 10px 30px 30px 30px
+
+.transactionNav .secondaryNav-group
+  padding-top: 5px
+
+.transactionEntries
+  padding-bottom: 60px
+
+.transactionEntries-inner
+  padding: 0 30px
+  margin-top: 30px
+  background-image: linear-gradient(rgba(255,255,255,1) 50%, darken($shade-lightest, 3%) 50%)
+  background-size: 56px 56px
+  min-height: 56px
+
+.js-no-transactions
+  line-height: 28px
+
+.transactionEntries-table
+  border-collapse: collapse
+  border-spacing: 0
+  line-height: 28px
+  width: 100%
+
+.transactionIcon
+  height: 18px
+  width: 18px
+  display: inline-block
+  vertical-align: middle
+
+.transactionIcon--positiveSum
+  background: url("icon-transaction-pos.svg") no-repeat center center
+
+.transactionIcon--negativeSum
+  background: url("icon-transaction-neg.svg") no-repeat center center
+
+.modal-bg
+  background: rgba(0,0,0,0.5)
+  position: fixed
+  left: 0
+  top: 0
+  right: 0
+  bottom: 0
+  z-index: $zIndex--modal-bg
+.modal
+  position: absolute
+  left: 50%
+  top: 100px
+  margin-left: -230px
+  z-index: $zIndex--modal
+.modal-title
+.modal-content
+.modal-bottom
+  padding-top: 20px
+
+.headerMenu-item
+  margin-left: 20px
+
+.headerMenu-link
+  height: 30px
+  line-height: 30px
+  display: block
+  float: right
+
+.headerMenu-link
+  color: $text
+  font-size: $fontSize--headerNav
+
+.headerMenu .switch
+  margin-top: 2px
+
+.icon:before
+  content: ""
+  height: 30px
+  width: 30px
+  position: absolute
+  left: 0
+  top: 0
+
+.btn.icon
+  padding-left: 30px
+  position: relative
+
+.btn.icon:before
+  top: 50%
+  margin-top: -15px
+
+.btn--round
+  height: 30px
+  width: 30px
+  padding: 0
+  border-radius: 15px
+
+.btn--round:active
+  opacity: 1
+  background: $shade-lighter
+
+.btn--round.icon
+  padding: 0
+
+.icon--delete:before
+  background: url("icon-delete.svg") no-repeat center center
+
+.icon--check:before
+  background: url("icon-check.svg") no-repeat center center
+
+.icon--check--white:before
+  background: url("icon-check-white.svg") no-repeat center center
+
+.icon--moveUp:before
+  background: url("icon-arrow-up.svg") no-repeat center center
+
+.icon--moveDown:before
+  background: url("icon-arrow-down.svg") no-repeat center center
+
+.icon--moreOptions:before
+  background: url("icon-more-options.svg") no-repeat center center
+
+.icon--moreOptionsVert:before
+  background: url("icon-more-options-vert.svg") no-repeat center center
+
+.icon--arrowLeft:before
+  background: url("icon-arrow-left-blue.svg") no-repeat center center
+
+.backLink
+  margin-left: -30px
+
+[data-controller-name="plans"][data-action-name="index"]
+  nav
+    display: none
+
+.plan
+  background-color: $paper
+  padding-top: 70px
+
+.plan-header
+  position: fixed
+  background-color: $primary
+  padding: 15px 20px
+  left: 0
+  top: 0
+  right: 0
+  box-shadow: 0 1px 10px rgba(0,0,0,0.3)
+  z-index: 10
+
+.plan-header .settingsPage-header-title
+  line-height: 40px
+  color: $paper
+
+.plan-header .settingsPage-header-title .caret
+  background-image: url('icon-arrow-down-small-white.svg')
+
+.plan-header .btn
+  border-color: transparent
+  background: none
+  color: lighten($primary, 25%)
+  margin-left: 5px
+
+.plan-header .btn--primary
+  border-color: $paper
+  background-color: $paper
+  color: $primary
+
+.plan-form
+  background: $shade-lightest
+  border-bottom: 1px solid $border--box
+  padding: 40px 200px 30px 30px
+  position: relative
+
+.plan-form .form
+  padding: 0 13px
+
+.plan-form .form-element
+  max-width: 190px
+  float: left
+  padding-right: 15px
+
+.plan-row
+  margin-bottom: 10px
+
+.yearLabel
+  @include uppercaseLabel()
+  color: $shade-base
+  display: inline-block
+  padding: 5px 13px
+  border-radius: 15px
+  float: right
+  text-align: right
+
+.yearLabel.current
+  background: $primary
+  color: $paper
+
+.yearLabel--forecast
+  color: $tertiary
+
+.plan-row--forecast .inputControl:focus
+  border-color: $tertiary
+
+.plan-cell
+  width: 13.5%
+  min-height: 40px
+  float: left
+  padding-right: 15px
+
+.plan-cell .inputControl
+  width: 100%
+  text-align: center
+
+.plan-cell--first
+  width: 120px
+  min-height: 10px
+  padding-right: 40px
+
+.plan-cell--last
+  width: 40px
+  padding: 0
+
+.plan-cell--breakpoint
+  position: relative
+
+.plan-cell--breakpoint:before
+  content: ""
+  height: 14px
+  width: 14px
+  position: absolute
+  left: -10px
+  top: 50%
+  background: $shade-base
+  border-radius: 7px
+  margin-top: -7px
+
+.plan-addNoteLink,
+.plan-editNoteLink
+  height: 40px
+  width: 40px
+  display: block
+
+.plan-addNoteLink
+  display: none
+  background: url("icon-note-new.svg") no-repeat center 10px
+  background-size: 24px
+
+.plan-row:hover .plan-addNoteLink
+  display: block
+
+.plan-editNoteLink
+  background: url("icon-note-edit.svg") no-repeat center 10px
+  background-size: 24px
+
+.plan-note
+  padding-left: 120px
+  width: 100%
+  max-width: 900px
+
+.plan-note textarea,
+.plan-note textarea:focus
+  padding: 20px
+  border-radius: 0
+  border: none
+  background-color: $tertiary--light
+
+.bottomCharts
+  padding: 80px 0
+  @media (min-width: 1220px)
+    padding-left: 60px
+    padding-right: 60px
+
+.bottomChart
+  width: 25%
+  padding: 0 2%
+  float: left
+
+.bottomChart canvas
+  height: 160px
+
+.light
+  color: $shade-base
+
+.detailFooter
+  background-color: $shade-lightest
+  padding: 30px
+  line-height: 1.8
+  border-radius: 0 0 6px 6px
+  color: $shade-base
+
+.detailFooter a
+  color: darken($shade-base, 10%)
+  text-decoration: underline
+
+.plan-footer
+  background-color: $shade-lightest
+  padding: 30px
+  line-height: 1.8
+  margin: 60px -30px -30px -30px
+  border-top: 1px solid $border--box
+
+.plan-form .radioChoice--needsAttention
+  position: absolute
+  right: 30px
+  top: 50%
+  margin-top: -20px
+
+.radioChoice--needsAttention
+  display: inline-block
+  position: relative
+  margin: 0
+
+.radioChoice--needsAttention .radioChoice-button:before
+  top: 50%
+  margin-top: -10px
+  content: ""
+  position: absolute
+  left: 1.5rem
+  height: 20px
+  width: 20px
+  border-radius: 11px
+  border: 1px solid $shade-light
+  line-height: 18px
+  text-align: center
+
+.radioChoice--needsAttention .radioChoice-headline
+  margin: 0
+
+.radioChoice--needsAttention .radioChoice-button
+  padding: 1rem 2rem 1rem 4.4rem
+  border-radius: 22px
+  border: 1px solid $shade-light
+  background: none
+  color: $shade-base
+
+.radioChoice--needsAttention .radioChoice-label.checked .radioChoice-button,
+.radioChoice--needsAttention .radioChoice-input:checked + .radioChoice-button,
+.radioChoice--needsAttention .radioChoice-button.radioChoice-button--disabled-checked
+  padding: 1rem 2rem 1rem 4.4rem
+  border: 1px solid $secondary
+  background: $secondary
+  color: $paper
+
+.radioChoice--needsAttention .radioChoice-label.checked .radioChoice-button:before,
+.radioChoice--needsAttention .radioChoice-input:checked + .radioChoice-button:before
+  content: "!"
+  border-color: $paper
+  background-color: $paper
+  color: $secondary
+
+.breadcrumbs a
+  display: inline-block
+  height: 40px
+  line-height: 40px
+  float: left
+  font-size: $fontSize--breadcrumbs
+
+.breadcrumb-divider
+  background: url("icon-arrow-right-grey.svg") no-repeat center center
+  display: inline-block
+  width: 50px
+  height: 40px
+  float: left
+  line-height: 40px
+
+.graphPreset
+  position: relative
+
+.graphPreset-delete
+  position: absolute
+  right: 24px
+  top: 2px
+  padding: 0 !important
+  height: 30px
+  width: 30px
+
+.graphPreset-delete:hover
+  background: none !important
+  opacity: 0.5
+
+.categoryWrap--fixed
+  background-color: lighten($primary--light, 4%)
+  
+  .positions
+    min-height: 62px
+
+  .position-inner
+    height: 62px
+
+  .position-switch,
+  .position-options
+    display: none
+
+  .break.category
+    margin-top: 0
+
+    &:before
+      top: 0
+
+    span
+      top: -10px
+      position: relative
+      border-color: $primary !important
+      background-color: $primary
+      color: $paper

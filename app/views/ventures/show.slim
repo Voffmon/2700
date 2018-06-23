@@ -1,0 +1,201 @@
+div class="primaryContent primaryContent--large"
+  header class="ventureHeader"
+    ul class="headerMenu u-flush u-floatRight u-list--unbulleted u-list--inline"
+
+      li class="headerMenu-item"
+        = link_to "Planning", setup_path(@venture.id, @venture.setups.maximum(:year)), :class => "headerMenu-link"
+
+      li class="headerMenu-item"
+        = link_to "Transactions", transaction_path(@venture.id), :class => "headerMenu-link"
+      
+      / Dropdown
+      li class="headerMenu-item dropdown"
+        a href="#" class="headerMenu-link ventureSettings" id="planSettings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+        ul class="dropdown-menu dropdown-menu--right" aria-labelledby="planSettings"
+          li
+            = link_to "Venture settings", edit_venture_path(@venture.id)
+          li
+            = link_to "Delete", venture_path(@venture.id), :remote => true, :method => "delete"
+
+    h1 class="ventureHeader-title u-flushTop" =@venture.name
+
+    p class="ventureHeader-description" Donec ullamcorper nulla non metus auctor fringilla. Curabitur blandit tempus porttitor.
+
+    / a href="#" class="ventureHeader-link" presentation.pdf
+    / a href="#"  class="ventureHeader-link"investor_pitch.pdf
+    div class="fixedNav-trigger"
+    div class="secondaryNav"
+      div class="secondaryNav-inner u-clearfix"
+        ul class="secondaryNav-group u-flush u-floatLeft u-list--unbulleted u-list--inline js-change-mode"
+
+          li class="secondaryNav-item"
+            = link_to "Plan", analysis_path(@venture.id, @setups.last.year, "plan"), :remote => true, :class => "active secondaryNav-link js-mode-plan", :data => {mode: "plan"}
+
+          li class="secondaryNav-item"
+            = link_to "Performance", analysis_path(@venture.id, @setups.last.year, "performance"), :remote => true, :class => "secondaryNav-link js-mode-performance", :data => {mode: "performance"}
+
+          li class="secondaryNav-item"
+            = link_to "Compare to plan", analysis_path(@venture.id, @setups.last.year, "compare_to_plan"), :remote => true, :class => "secondaryNav-link js-mode-compare-to-plan", :data => {mode: "compare_to_plan"}
+
+          li class="secondaryNav-item"
+            = link_to "Forecast", analysis_path(@venture.id, @setups.last.year, "forecast"), :remote => true, :class => "secondaryNav-link js-mode-forecast", :data => {mode: "forecast"}
+
+          li class="secondaryNav-item dropdown"
+            a href="#" class="secondaryNav-link js-mode-compare-to-year" id="compareToYear" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              |Compare to Year
+              span class="caret"
+        
+            / Dropdown
+            ul class="dropdown-menu dropdown-menu--left" aria-labelledby="compareToYear"
+              li
+                a href="#" Compare to 2015
+              li
+                a href="#" Compare to 2014
+              li
+                a href="#" Compare to 2013
+
+        ul class="secondaryNav-group u-flush u-floatRight u-list--unbulleted u-list--inline"
+          li class="secondaryNav-item dropdown"
+            a href="#" class="secondaryNav-link" id="planTimeframe" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              |Year to date
+              span class="caret"
+        
+            / Dropdown
+            ul class="dropdown-menu dropdown-menu--right" aria-labelledby="planTimeframe"
+              li
+                a href="#" Months
+              li class="active"
+                a href="#" Quarters
+              li
+                a href="#" Year to date
+
+          li class="secondaryNav-item"
+            span class="secondaryNav-link secondaryNav-divider"
+              |&nbsp;
+            
+          li class="secondaryNav-item dropdown js-select-year"
+            a href="#" class="secondaryNav-link" id="planYear" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              span class="js-selected-year" =@setups.last.year
+              span class="caret"
+        
+            / Year dropdown
+            ul class="dropdown-menu dropdown-menu--right" aria-labelledby="planYear"
+              - @setups.each do |setup| 
+                li = link_to setup.year, analysis_path(@venture.id, setup.year, "plan"), :remote => true, :data => {year: setup.year}
+            
+  
+  / Render analysis view  
+  div class="mainChart"
+    
+    / Print month labels for chart
+    - (1..12).step do |month|
+      input type="hidden" class="js-chart-month" value=Date::MONTHNAMES[month]
+      
+    canvas id="canvas" height="80"
+
+    div class="timeline"
+    
+      / div class="timelineAxis"
+      /   span class="timelineAxis-line"
+      /   i class="timelineAxis-event timeline-dot" style="left:0"
+      /   i class="timelineAxis-event timeline-dot" style="left:32%"
+      /   i class="timelineAxis-event timeline-dot" style="left:68%"
+      /   i class="timelineAxis-event timeline-dot" style="left:73%"
+
+      / div class="timeline-content"
+      /   div class="timelineList-header u-clearfix"
+      /     div class="uppercaseLabel uppercaseLabel--light u-floatLeft"
+      /       |Timeline
+
+      /     a href="#" class="u-floatRight" Add event on timeline
+      /   form class="form timelineList-addEventForm"
+      /     select class="inputControl inputControl--sm inputControl--select"
+      /       option value="1" 1
+      /       option value="2" 2
+      /       option value="3" 3
+      /       option value="4" 4
+      /     select class="inputControl inputControl--sm inputControl--select"
+      /       option value="1" January
+      /       option value="2" February
+      /     input type="text" class="inputControl inputControl--sm" placeholder="Title"
+      /     input type="submit" class="btn btn--primary btn--sm" value="Add"
+      /   ul class="timelineList u-list--unbulleted"
+      /     li class="timelineList-item"
+      /       span class="timeline-dot"
+      /       span class="timelineList-item-date" Jan 1, 2016
+      /       span class="timelineList-item-title" Started Monitoring
+      /       a href="#" class="u-floatRight" Delete
+      /       a href="#" class="u-floatRight" Edit
+
+      /     li class="timelineList-item"
+      /       span class="timeline-dot"
+      /       span class="timelineList-item-date" Feb 20, 2016
+      /       span class="timelineList-item-title" Launch date
+      /       a href="#" class="u-floatRight" Delete
+      /       a href="#" class="u-floatRight" Edit
+
+      /     li class="timelineList-item"
+      /       span class="timeline-dot"
+      /       span class="timelineList-item-date" Mar 23, 2016
+      /       span class="timelineList-item-title" New product line
+      /       a href="#" class="u-floatRight" Delete
+      /       a href="#" class="u-floatRight" Edit
+
+      /     li class="timelineList-item"
+      /       span class="timeline-dot"
+      /       span class="timelineList-item-date" Apr 2, 2016
+      /       span class="timelineList-item-title" Launch date
+      /       a href="#" class="u-floatRight" Delete
+      /       a href="#" class="u-floatRight" Edit
+
+      / div class="expand-timeline js-expand-timeline"
+      /   span
+    
+    
+      / Presets for analysis
+      ul class="js-presets tags chartTags u-list--unbulleted u-flush"
+        li class="dropdown"
+          a href="#" class="tag tag--light" id="chartPresets" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+            | Select a preset
+            span class="caret"
+        
+          / Dropdown
+          input.js-create-preset-url type="hidden" value=presets_path
+          ul class="dropdown-menu dropdown-menu--left" aria-labelledby="chartPresets"
+            = render :partial => "preset", :collection => @venture.presets
+
+            li.divider
+            
+            li
+              a.js-save-preset href="#" Save current selection as preset
+        
+        .js-tag-prototype style="display:none;"
+          li.tag.tag--removable.js-tag
+            span.js-tag-name class="tag-name js-remove-tag"
+            span class="js-tag-remove tag-remove js-remove-tag"
+        
+        span.js-tags
+        
+        / Clear all
+        span.js-clear-presets
+          | Clear all
+            
+  .js-analysis
+    = render :partial => "analysis", :locals => {setup: @setups.last, mode: "plan"}
+
+
+/ Saving modal
+.modal-bg
+.modal.primaryContent.primaryContent--small
+  .primaryContent-inner
+    .modal-title
+      h2 class="u-flushTop" Give your preset a name
+    = form_tag presets_path, :remote => true
+      input type="hidden" name="venture_id" value=@venture.id
+      input.js-preset-data type="hidden" name="preset[data]"
+      .modal-content
+        .form-element
+          input.js-preset-name type="text" name="preset[name]" class="inputControl"
+      .modal-bottom
+        button class="btn btn--primary js-modal-submit" Save
+        button class="btn btn--flat js-modal-cancel" Cancel

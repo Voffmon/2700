@@ -1,0 +1,8 @@
+.categoryWrap.categoryWrap--fixed.js-category
+  h3 class="category uppercaseLabel break u-centered"
+    span 
+      |Direct costs
+  
+  div class="dimension-inner row"
+    .js-positions.js-unmovable.positions
+      = render :partial => "setups/position", :collection => positions

@@ -1,0 +1,80 @@
+= form_for transaction, :remote => true, :html => {:class => "js-new-transaction-form form"} do |f|
+
+  .row
+    .col-xs-6
+      .form-element
+        .row
+          
+          input.js-venture-id type="hidden" name="venture_id" value=venture.id
+          input type="hidden" class="js-number-of-days-url" value=number_of_days_path
+          input type="hidden" class="js-positions-for-year-url" value=positions_for_year_path
+          
+          / Year
+          .col-xs-4
+            label class="inputLabel" Year
+            select class="inputControl inputControl--select js-year" name="year" required="required"
+              option value=""
+                | Select a year
+              - years.each do |year|
+                option value=year data-unlocked=("unlocked" if unlocked_years.include?(year)) selected=("selected" if transaction.date.present? && transaction.date.year == year) =year
+          
+          / Month
+          .col-xs-4
+            label class="inputLabel" Month
+            select class="inputControl inputControl--select js-month" name="month" required="required"
+              option value=""
+                | Select a month
+              - (1..12).map {|m| [Date::MONTHNAMES[m], m]}.each_with_index do |month|
+                option value=month[1] selected=("selected" if transaction.date.present? && transaction.date.month == month[1]) =day =month[0]
+          
+          / Day
+          .col-xs-4
+            label class="inputLabel" Day
+            select class="inputControl inputControl--select js-day" name="day" required="required"
+              option value=""
+                | Select a day
+              - (1..31).each do |day|
+                option value=day selected=("selected" if transaction.date.present? && transaction.date.day == day) =day
+                
+    / Title
+    .col-xs-6
+      .form-element
+        label class="inputLabel" Title
+        = f.text_field :title, :class => "inputControl js-transaction-title", :required => true
+        
+    / Position
+    .col-xs-6
+      .form-element
+        label class="inputLabel" Position
+        = f.select :position_id, positions.map{ |p| [p.name, p.id] }, {:selected => (transaction.position.id if transaction.position.present?)}, :class => "js-positions inputControl inputControl--select", :required => true
+    
+    / Amount
+    .col-xs-6
+      .form-element
+        .row
+          .col-xs-4
+            label class="inputLabel" Gross Amount (€)
+            = f.text_field :amount, :value => (transaction.amount.to_s.gsub(".", ",")), :class => "inputControl js-maths js-decimal js-transaction-amount", :required => true
+          .col-xs-4
+            label class="inputLabel" VAT (%)
+            = f.text_field :vat, :value => (transaction.vat ||= venture.vat), :class => "inputControl js-maths js-integer js-transaction-vat", :required => true
+          .col-xs-4
+            label class="inputLabel" Net Amount (€)
+            = text_field_tag :net_amount, "", :class => "inputControl inputControl--disabled js-decimal js-transaction-net-amount", :readonly => true
+              
+    / Note
+    .col-xs-6
+      .form-element
+        label class="inputLabel" Note
+        = f.text_area :note, :placeholder => "Note", :class => "inputControl js-transaction-note"
+  
+  / Submit
+  .row
+    .col-xs-12
+      = f.submit :class => "btn btn--primary"
+      
+      - if action_name == "edit"
+        = link_to "Cancel", :back, :class => "btn btn--flat"
+      - else
+        button class="btn btn--flat js-hide-transaction-form" 
+          | I'm done adding transactions

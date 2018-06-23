@@ -1,0 +1,24 @@
+de:
+  datetime: &datetime
+    day_names:
+      [Sonntag, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag]
+    month_names:
+      [~, Jänner, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember]
+    formats:
+      default: "%A %d. %B %Y"
+      time: "%H:%M"
+  date:
+    <<: *datetime
+  time:
+    <<: *datetime
+
+  number:
+    currency:
+      format:
+        delimiter: "."
+        format: "%n %u"
+        precision: 2
+        separator: ","
+        significant: false
+        strip_insignificant_zeros: false
+        unit: "€"

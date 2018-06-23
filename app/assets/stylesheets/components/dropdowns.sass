@@ -1,0 +1,135 @@
+.caret
+  display: inline-block
+  width: 12px
+  height: 7px
+  margin-left: 4px
+  margin-top: -2px
+  vertical-align: middle
+  background: url("icon-arrow-down-small.svg") no-repeat center center
+
+.dropup,
+.dropdown
+  position: relative
+
+.dropdown-toggle:focus
+  outline: 0
+
+.dropdown-menu
+  position: absolute
+  top: -10px
+  left: -10px
+  z-index: 1000
+  float: left
+  min-width: 160px
+  padding: 10px 0
+  margin: 0
+  list-style: none
+  text-align: left
+  background-color: $paper
+  border-radius: 3px
+  -webkit-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2)
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2)
+  -webkit-background-clip: padding-box
+  background-clip: padding-box
+  opacity: 0
+  -webkit-transform: scaleY(0)
+  -ms-transform: scaleY(0)
+  transform: scaleY(0)
+  @include transition(0.12s)
+  transform-origin: 0 0
+
+.dropdown-menu.u-floatRight
+  right: -10px
+  left: auto
+
+.dropdown-menu .divider
+  height: 1px
+  margin: 9px 0
+  overflow: hidden
+  background-color: #e5e5e5
+
+.dropdown-menu > li
+  display: block
+  opacity: 0
+  @include transition(0s)
+  transition-delay: 0s
+
+.dropdown-menu > li > a
+  display: block
+  padding: 8px 30px
+  clear: both
+  font-weight: normal
+  line-height: 1.42857143
+  color: #333333
+  white-space: nowrap
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus
+  text-decoration: none
+  color: $text
+  background-color: #f5f5f5
+
+.dropdown-menu > .active > a,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus
+  font-weight: bold
+  text-decoration: none
+  outline: 0
+
+.dropdown-menu > .disabled > a,
+.dropdown-menu > .disabled > a:hover,
+.dropdown-menu > .disabled > a:focus
+  color: #777777
+
+.dropdown-menu > .disabled > a:hover,
+.dropdown-menu > .disabled > a:focus
+  text-decoration: none
+  background-color: transparent
+  background-image: none
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false)
+  cursor: not-allowed
+
+.open > .dropdown-menu
+  opacity: 1
+  -webkit-transform: scaleY(1)
+  -ms-transform: scaleY(1)
+  transform: scaleY(1)
+
+.open > .dropdown-menu > li
+  opacity: 1
+  @include transition(0.2s)
+  transition-delay: 0.15s
+
+.open > a
+  outline: 0
+
+.dropdown-menu--right
+  left: auto
+  right: -10px
+
+.dropdown-menu--left
+  left: -10px
+  right: auto
+
+.dropdown-backdrop
+  position: fixed
+  left: 0
+  right: 0
+  bottom: 0
+  top: 0
+  z-index: 990
+
+.u-floatRight > .dropdown-menu
+  right: 0
+  left: auto
+
+.dropup .caret
+  transform: rotate(180deg)
+  -webkit-transform: rotate(180deg)
+  -moz-transform: rotate(180deg)
+  -o-transform: rotate(180deg)
+
+.dropup .dropdown-menu
+  top: auto
+  bottom: 100%
+  margin-bottom: 2px

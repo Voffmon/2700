@@ -1,0 +1,65 @@
+.mainNav
+  width: 100%
+
+.mainNav-ribbon
+  position: relative
+  text-align: center
+  white-space: nowrap
+
+.mainNav-group
+  display: inline-block
+
+.mainNav-group--left
+  float: left
+
+.mainNav-group--right
+  float: right
+
+.mainNav-menuItem
+  display: block
+  float: left
+  padding: 1rem 0.2rem
+  line-height: 20px
+
+.mainNav-menuItem-link
+  border-radius: 1.5rem
+  color: rgba(255,255,255,0.6)
+  display: block
+  padding: 0.6rem 1.6rem
+  cursor: pointer
+
+.mainNav-menuItem-link:hover
+  color: $paper
+
+.mainNav-menuItem-link:active
+  color: $primary
+
+
+.mainNav-menuItem-link.active
+  color: $primary
+  cursor: pointer
+
+.mainNav-menuItem-link--user
+  position: relative
+  padding-left: 30px
+
+  .avatar
+    position: absolute
+    left: 0
+    top: 50%
+    margin-top: -13px
+    height: 26px
+    width: 26px
+
+  .caret
+    background-image: url('icon-arrow-down-small-white.svg')
+    opacity: 0.6
+
+.mainNav-menuItem-link--user:active
+  background: none
+
+.mainNav-menuItem-link--brand
+  background: url(/assets/logo-white.svg) no-repeat center center
+  background-size: 50px
+  width: 80px
+  height: 32px

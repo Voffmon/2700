@@ -1,0 +1,54 @@
+.secondaryNav
+  position: absolute
+  width: 100%
+  left: 0
+  bottom: 0
+  z-index: $zIndex-6
+
+.secondaryNav .dropdown-menu
+  @include uppercaseLabel()
+  font-size: 1.2rem
+
+.secondaryNav-inner
+  padding: 25px 20px
+  background: $paper
+  box-shadow: 0 1px 0 rgba(0,0,0,0.1)
+  max-width: 1220px
+  margin: 0 auto
+  @media (min-width: 1220px)
+    padding-left: 80px
+    padding-right: 80px
+
+.fixed-nav .secondaryNav
+  position: fixed
+  bottom: auto
+  top: 0
+  right: 0
+
+.secondaryNav-group
+
+.secondaryNav-link
+  @include uppercaseLabel()
+  font-size: $fontSize--secondaryNav
+  border-radius: 5px
+  color: $text
+  padding: 8px
+  display: block
+
+.secondaryNav-divider
+  border-right: 1px solid $border--box
+  padding-right: 0
+  margin-right: 8px
+  border-radius: 0
+
+.secondaryNav-link.active
+  color: $primary
+  background: $primary--light
+
+.secondaryNav-link:active,
+.dropdown.open .secondaryNav-link
+  background: $shade-lighter
+
+.secondaryNav-link.active:active
+  color: darken($primary, 5%)
+  background: darken($primary--light, 5%)

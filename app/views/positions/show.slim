@@ -1,0 +1,72 @@
+div class="primaryContent primaryContent--large u-clearfix positionDetail" class=("js-needsAttention" if @position.needs_attention)
+  header class="detailHeader"
+    ul class="headerMenu u-flush u-floatRight u-list--unbulleted u-list--inline"
+
+      li class="headerMenu-item"
+        div class="switch u-floatRight" data-toggle="tooltip" title="Disable/Enable"
+          input type="checkbox" name="switch" class="switch-checkbox js-switch-active-inactive" id="myswitch-#{@position.id}" checked=("checked" if @position.active_state == "active")
+          label class="switch-label" for="myswitch-#{@position.id}"
+
+      li class="headerMenu-item"
+        .radioChoice.radioChoice--needsAttention
+          label for="needsAttention" class="radioChoice-label"
+            input type="checkbox" name="position[needs_attention]" checked=("checked" if @position.needs_attention) class="radioChoice-input js-needs-attention" id="needsAttention"
+            .radioChoice-button
+              .radioChoice-content
+                .radioChoice-headline Needs attention
+
+      li class="headerMenu-item" = link_to "Edit Settings", edit_position_path(@position.id), :class => "btn"
+
+      li class="headerMenu-item dropdown"
+        a href="" class="btn btn--round btn--flat icon icon--moreOptionsVert" id="positionOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+
+        / Dropdown
+        ul class="dropdown-menu dropdown-menu--right" aria-labelledby="positionOptions"
+          li = link_to "Archive", set_position_state_path(@position.id, 'archived'), :class => "js-set-state js-set-archived", :remote => true, :method => "patch"
+          li = link_to "Delete", set_position_state_path(@position.id, 'deleted'), :class => "js-set-state js-set-deleted", :remote => true, :method => "patch"
+          li style="display:none;" = link_to "Disable", set_position_state_path(@position.id, 'inactive'), :class => "js-set-state js-set-inactive", :remote => true, :method => "patch"
+          li style="display:none;" = link_to "Enable", set_position_state_path(@position.id, 'active'), :class => "js-set-state js-set-active", :remote => true, :method => "patch"
+          li style="display:none;" = link_to "Toggle Needs Attention", toggle_position_needs_attention_path(@position.id), :class => "js-toggle-needs-attention", :remote => true, :method => "patch"
+    .breadcrumbs.u-clearfix
+      = link_to @venture.name, venture_path(@venture.id)
+      span.breadcrumb-divider
+      = link_to setup_path(@setup.venture_id, @setup.year, @dimension), :class => "" do
+          = @dimension.tr("_", " ").camelize
+
+    h1
+      = @position.name
+      |&nbsp;
+      span class="light" = @setup.year
+    
+    - if @category.order == 0
+      div class="tag tag--light" No category assigned
+    - else
+      div class="tag tag--light" = @category.name
+      
+
+  / Chart data 
+  - results_colum = get_result_column(@position)
+  - transactions = @position.transactions
+  - (1..12).step do |month|
+    - transactions_for_month = transactions.select{|t| t.date.year == @setup.year && t.date.month == month}
+    div class="js-chart-data"
+      input type="hidden" class="js-chart-month" value=Date::MONTHNAMES[month]
+      input type="hidden" class="js-chart-plan" value=(@plan_months[month-1][results_colum] unless @plan_months[month-1].blank?)
+      input type="hidden" class="js-chart-forecast" value=(@plan_months[month-1][results_colum.to_s + "_forecast"] unless @plan_months[month-1].blank?)
+      input type="hidden" class="js-chart-performance" value=(transactions_for_month.map(&:amount).sum)
+
+
+  div class="mainChart" style="padding:40px 68px 40px 0;"
+    div.u-clearfix style="padding:0 12px 15px 80px;"
+      ul class="tags u-list--unbulleted u-flush u-floatLeft"
+        li.tag.tag--color0
+          span class="tag-name" Plan
+        li.tag.tag--color1
+          span class="tag-name" Forecast
+        li.tag.tag--color2
+          span class="tag-name" Performance
+        
+        span.js-tags
+     
+      = link_to "Edit Plan", plan_path(@position.id), :class => "btn btn--primary u-floatRight"
+    canvas id="canvas" height="70"

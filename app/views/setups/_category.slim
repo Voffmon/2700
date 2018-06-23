@@ -1,0 +1,24 @@
+.js-category data-id=category.id
+
+  / If order is 0, this means the category is a dummy cateogry an cannot be edited
+  - unless category.order == 0
+    h3 class="category uppercaseLabel break u-centered"
+      span 
+        = link_to category.name, "#", :class => "categoryLabel js-show-edit-category-form"
+        = form_for category, :remote => true, :html => {:class => "categoryLabel-form js-edit-category-form", :style => "display:none;"} do |f|
+          = f.hidden_field :id
+          = f.text_field :name, :placeholder => "Category name", :class => "uppercaseLabel js-category-name", :required => true
+      
+      div class="u-floatRight category-actions"
+        = link_to "", category_path(category.id), :class => "js-delete-category icon icon--delete", :remote => true, :method => "delete"
+        = link_to "", "#", :class => "js-category-down icon icon--moveDown"
+        = link_to "", "#", :class => "js-category-up icon icon--moveUp"
+
+  div class="dimension-inner row"
+    .js-positions.positions
+      = render :partial => "setups/position", :collection => category.positions.order(:order, :created_at) 
+    div class="position position--newPosition col-sm-4"
+      = link_to new_position_path(:category_id => category.id), :class => "position-inner"
+        |
+
+      

@@ -1,0 +1,14 @@
+tr data-tt-id=line class="row--highlighted" data-level="main" data-identifier=title.parameterize.underscore 
+  td class="firstCell"
+    div class="rowSelect"
+      label class="rowSelect-label"
+        input type="checkbox" class="rowSelect-input js-select-for-chart"
+        span class="rowSelect-button"
+    span class="rowTitle" =title
+
+  - sum = values.sum
+  td =sum.round
+  td =(sum/12).round
+
+  - (1..12).step do |month|
+    td.js-month-data =values[month-1]

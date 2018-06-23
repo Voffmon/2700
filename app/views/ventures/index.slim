@@ -1,0 +1,9 @@
+.js-ventures style=(@ventures.size == 0 ? "display:none;" : "")
+  - @ventures.each do |venture|
+    = render :partial => "venture", :locals => {:venture => venture}
+    
+.js-no-ventures style=(@ventures.size > 0 ? "display:none;" : "")
+  | Noch keine Ventures...
+
+.u-centered
+  = link_to "New venture", new_venture_path, :class => "btn btn--primary"

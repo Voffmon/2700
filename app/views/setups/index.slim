@@ -1,0 +1,125 @@
+div class="primaryContent primaryContent--large primaryContent--scroll"
+  div class="settingsPage-header u-clearfix settingsPage-header--fixed"
+    = link_to @venture.name, venture_path(@venture.id), :class => "settingsPage-header-title settingsPage-header-title--blue u-floatLeft"
+    span.breadcrumb-divider
+    div class="dropdown u-floatLeft"
+      a href="#" class="settingsPage-header-title" id="selectSetupYear" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+        | Setup 
+        = @selected_setup.year
+        span class="caret"
+    
+      / Dropdown
+      ul class="dropdown-menu dropdown-menu--left" aria-labelledby="chartPresets"
+        - @setups.each do |setup|
+          li class=("active" if @selected_setup.year == setup.year)
+            = link_to setup_path(@venture.id, setup.year) do
+              | Setup 
+              = setup.year
+              span class="u-floatRight" class=("lockedStatus" if setup.is_locked)
+        li class="divider"
+        li
+          a.js-open-new-setup-modal href="#" + Add another year
+
+    = link_to "Done", venture_path(@venture.id), :class => "settingsPage-header-link u-floatRight btn btn--flat icon icon--check"
+
+    / Learn more about setting up your positions
+    a href="" class="settingsPage-header-link u-floatRight btn btn--flat icon" Learn more
+  
+  / Dimensions
+  div class="dimensions js-dimensions js-accordion"
+    
+    input.active-dimension type="hidden" value=@dimension
+    input.root-url type="hidden" value=setup_path(@venture.id, @selected_setup.year)
+    input.update-category-order-url type="hidden" value=update_category_order_path
+    input.update-position-order-url type="hidden" value=update_position_order_path
+    
+    / Render all dimensions
+    - Category.dimensions.each do |dimension|
+      - categories = @categories.where(:dimension => dimension).order(:order, :created_at)
+      .js-dimension data-dimension=dimension data-url=setup_path(@venture.id, @selected_setup.year, dimension)
+        h2 class="dimension-title u-flush u-noSelect"
+          =dimension.capitalize.tr("_", " ")
+          span class="dimension-title-bubble" 
+            - if dimension == "costs_of_sales"
+              - costs_of_sales_positions = @selected_setup.positions.where.not(:costs_method => "no_direct_costs")
+            = Position.where(category_id: categories.map(&:id), active_state: ["active", "inactive"]).count + (costs_of_sales_positions.present? ? costs_of_sales_positions.size : 0)
+        div class="dimension-content"
+          .js-categories
+            = render :partial => "category", :collection => categories
+          = render :partial => "new_category", :locals => {:setup => @selected_setup, :dimension => dimension}
+          
+          / Special costs of sales category
+          - if costs_of_sales_positions.present?
+            = render :partial => "unmovable_category", :locals => {:positions => costs_of_sales_positions}
+  
+  / Links to deleted and archived positions
+  div class="detailFooter"
+    |See all&nbsp;
+    = link_to "archived", archived_positions_path(@venture.id, @selected_setup.year)
+    |&nbsp;and&nbsp;
+    = link_to "deleted", deleted_positions_path(@venture.id, @selected_setup.year)
+    |&nbsp;positions
+    
+    / Reset setup
+    a.js-open-reset-setup-modal.u-floatRight href="#"
+      | Reset setup for 
+      = @selected_setup.year
+
+  
+  / Warning modal for copying setup
+  .modal-bg
+  .modal.primaryContent.primaryContent--small.js-copy-setup-modal
+    .primaryContent-inner
+      .modal-title
+        h2 class="u-flushTop" Warning
+      = form_tag create_setup_path
+        input type="hidden" name="venture_id" value=@venture.id
+        .modal-content
+          .form-element
+            select name="mode" class="js-modal-mode inputControl inputControl--select"
+              option value="complete" Copy whole setup from year
+              option value="structure" Copy only structure from year
+              option value="scratch" Start from scratch
+          .form-element
+            label.js-modal-copy-to-title class="inputLabel" Setup and current plan of
+            select.js-modal-from-year name="from_year" class="inputControl inputControl--select"
+              - @setups.each do |setup|
+                option selected=("selected" if setup.year == @selected_setup.year) value=setup.year =setup.year
+          .form-element
+            label class="inputLabel" will be copied to
+            select.js-modal-to-year name="to_year" class="inputControl inputControl--select"
+              - ((@setups.first.year - 5)..(@setups.last.year + 5)).each do |year|
+                - unless @setups.map(&:year).include?(year)
+                  option selected=("selected" if @setups.last.year + 1 == year) value=year =year
+          
+        .modal-bottom
+          button class="btn btn--primary js-modal-submit" Ok, understood
+          button class="btn btn--flat js-modal-cancel" Cancel
+  
+  / Warning modal for resetting setup
+  .modal.primaryContent.primaryContent--small.js-reset-setup-modal
+    .primaryContent-inner
+      .modal-title
+        h2 class="u-flushTop" Warning
+      = form_tag create_setup_path
+        input type="hidden" name="venture_id" value=@venture.id
+        .modal-content
+          .form-element
+            select name="mode" class="js-modal-mode inputControl inputControl--select"
+              option value="complete" Copy whole setup from year
+              option value="structure" Copy only structure from year
+              option value="scratch" Start from scratch
+          .form-element
+            label class="inputLabel" Setup and current plan of
+            select.js-modal-from-year name="from_year" class="inputControl inputControl--select"
+              - @setups.each do |setup|
+                - next if setup == @selected_setup
+                option value=setup.year =setup.year
+          .form-element
+            label.js-modal-copy-to-title class="inputLabel" will be copied to &nbsp;
+            input type="hidden" name="to_year" value=@selected_setup.year
+            = @selected_setup.year
+          
+        .modal-bottom
+          button class="btn btn--primary js-modal-submit" Ok, understood
+          button class="btn btn--flat js-modal-cancel" Cancel

@@ -1,0 +1,10 @@
+div class="primaryContent primaryContent--large"
+  div class="settingsPage-header u-clearfix"
+    div class="settingsPage-header-title"
+      = link_to "Back to setup", :back, :class => "icon icon--arrowLeft"
+  .positionList
+    - @positions.each do |position|
+      .positionList-item.u-clearfix
+        span.positionList-item-title
+          = position.name
+        = link_to "Restore", set_position_state_path(position.id, 'active'), :class => "js-restore u-floatRight", :remote => true, :method => "patch"

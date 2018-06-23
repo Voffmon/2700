@@ -1,0 +1,32 @@
+div class="primaryContent primaryContent--small"
+  div class="primaryContent-inner"
+    h2 class="u-centered u-flushTop"
+      = t(".headline")
+    .form
+      = form_for(resource, as: resource_name, url: update_password_path, html: { method: :put }) do |f|
+        = devise_error_messages!
+        = f.hidden_field :reset_password_token
+        .form-element
+          = f.label :password, t(".password_label"), :class => "inputLabel"
+          - if @minimum_password_length
+            em
+              | (
+              = @minimum_password_length
+              |  characters minimum)
+          = f.password_field :password, autofocus: true, autocomplete: "off", :class => "inputControl"
+        
+        .form-element
+          = f.label :password_confirmation, t(".password_confirmation_label"), :class => "inputLabel"
+          = f.password_field :password_confirmation, autocomplete: "off", :class => "inputControl"
+
+        .form-element
+          = f.submit t(".change_password_button")
+
+        .form-element
+          button type="button" class="btn btn--primary btn--loading"
+            .loadingAnimation
+              .bounce1
+              .bounce2
+              .bounce3
+        
+    = render "users/shared/links"

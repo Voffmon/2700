@@ -1,0 +1,101 @@
+div class="primaryContent primaryContent--large"
+  div class="settingsPage-header u-clearfix"
+    h1 class="settingsPage-header-title u-floatLeft u-flush"
+      |Transactions
+      / = @venture.name
+
+    = link_to "Done", venture_path(@venture.id), :class => "settingsPage-header-link u-floatRight btn btn--flat icon icon--check"
+
+    / Learn more about setting up your positions
+    a href="" class="settingsPage-header-link u-floatRight btn btn--flat icon" Run a detailed report
+    
+
+  div class="transactionNav"
+    / ul class="headerMenu u-flush u-floatRight u-list--unbulleted u-list--inline"
+
+    /   li class="headerMenu-item"
+    /     a href="#" class="settingsPage-header-link u-floatRight" Run a detailed report
+
+    /   / Dropdown
+    /   li class="headerMenu-item dropdown"
+    /     a href="#" class="headerMenu-link ventureSettings" id="planSettings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+    /     ul class="dropdown-menu dropdown-menu--right" aria-labelledby="planSettings"
+    /       li
+    /         = link_to "Venture settings", edit_venture_path(@venture.id)
+    /       li
+    /         = link_to "Delete", venture_path(@venture.id), :remote => true, :method => "delete"
+
+    / h1 class="ventureHeader-title u-flushTop"
+    /   | Transactions
+    /   / = @venture.name
+
+    div class="secondaryNav"
+      div class="secondaryNav-inner u-clearfix"
+        button type="button" class="btn btn--primary js-show-transaction-form" Add new Transaction
+
+        ul class="secondaryNav-group u-flush u-floatRight u-list--unbulleted u-list--inline"
+          li class="secondaryNav-item"
+            a href="#" class="secondaryNav-link" < 
+          li class="secondaryNav-item"
+            a href="#" class="secondaryNav-link" 9 - 15 May
+          li class="secondaryNav-item"
+            a href="#" class="secondaryNav-link"  >
+        
+          / li class="secondaryNav-item dropdown"
+          /   a href="#" class="secondaryNav-link" id="transactionDatepicker" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+          /     |Datepicker
+          /     span class="caret"
+        
+          /   / Dropdown
+          /   ul class="dropdown-menu dropdown-menu--right" aria-labelledby="transactionDatepicker"
+          /     li
+          /       |Datepicker
+        
+          li class="secondaryNav-item dropdown"
+            a href="#" class="secondaryNav-link" id="transactionTimeframe" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              |Week
+              span class="caret"
+        
+            / Dropdown
+            ul class="dropdown-menu dropdown-menu--right" aria-labelledby="transactionTimeframe"
+              li
+                a href="#" Week
+                a href="#" Month
+
+  div class="transactionForm"
+    = render :partial => "form", :locals => {transaction: Transaction.new, venture: @venture, years: @years, unlocked_years: @unlocked_years, positions: []}
+  
+  / Transaction table
+  div class="transactionEntries"
+    div class="transactionEntries-inner"
+      table class="transactionEntries-table"
+        thead style="text-align:left"
+          tr
+            th 
+            th Date
+            th Position
+            th Title
+            th Category
+            th Gross
+            th VAT
+            th Net
+
+        tbody.js-transactions style=(@transactions.size == 0 ? "display:none;" : "")
+          = render :partial => "transaction", :collection => @transactions
+        
+      .js-no-transactions style=(@transactions.size > 0 ? "display:none;" : "")
+        | No transaction yet
+
+
+/ Warning modal for locking plan
+.modal-bg
+.modal.primaryContent.primaryContent--small
+  .primaryContent-inner
+    .modal-title
+      h2 class="u-flushTop" Warning
+    .modal-content
+      | You are about to lock the setup for 
+      span.js-modal-year
+    .modal-bottom
+      button class="btn btn--primary js-modal-submit" Ok, understood
+      button class="btn btn--flat js-modal-cancel" Cancel

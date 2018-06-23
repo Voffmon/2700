@@ -1,0 +1,58 @@
+.radioChoice
+  display: block
+  position: relative
+  margin-bottom: 0.5em
+
+.radioChoice.disabled
+  display: none
+
+.radioChoice-label
+  cursor: pointer
+
+.radioChoice-label--disabled
+  cursor: default
+
+.radioChoice-input
+  display: none
+
+.radioChoice-input:disabled+.radioChoice-button
+  cursor: default
+  opacity: 0.5
+
+.radioChoice-button
+  background-color: $paper
+  border: 1px solid $border--input
+  border-bottom-color: darken($border--input,7%)
+  border-radius: 0.4rem
+  padding: 1.5rem 2rem
+  display: block
+  vertical-align: top
+
+.radioChoice-content
+  vertical-align: top
+
+.radioChoice-label.checked .radioChoice-button,
+.radioChoice-input:checked+.radioChoice-button,
+.radioChoice-button.radioChoice-button--disabled-checked
+  border-color: $primary
+  border-width: 0.2rem
+  padding: 1.4rem 1.9rem
+
+.radioChoice-label.checked .radioChoice-button .radioChoice__text,
+.radioChoice-input:checked+.radioChoice-button .radioChoice__text,
+.radioChoice-button.radioChoice-button--disabled-checked .radioChoice__text
+  display: none !important
+
+.radioChoice-label
+  -moz-user-select: none
+  -ms-user-select: none
+  -webkit-tap-highlight-color: transparent
+  -webkit-user-select: none
+  user-select: none
+
+.radioChoice-headline
+  margin-bottom: 1rem
+
+.radioChoice-description
+  color: $shade-base
+  font-size: $fontSize-small

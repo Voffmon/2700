@@ -1,0 +1,24 @@
+div class="primaryContent primaryContent--small"
+  div class="primaryContent-inner"
+    h2 class="u-centered u-flushTop"
+      = t(".headline")
+
+    .form
+      = form_for(resource, as: resource_name, url: password_path, html: { method: :post }) do |f|
+        = devise_error_messages!
+        
+        .form-element
+          = f.label :email, :class => "inputLabel"
+          = f.email_field :email, autofocus: true, :class => "inputControl"
+        
+        .form-element
+          = f.submit t(".reset_password_button"), :class => "btn btn--primary"
+
+        .form-element
+          button type="button" class="btn btn--primary btn--loading"
+            .loadingAnimation
+              .bounce1
+              .bounce2
+              .bounce3
+        
+    = render "users/shared/links"

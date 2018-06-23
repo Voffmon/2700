@@ -1,0 +1,53 @@
+/ Navigation
+nav 
+  div class="mainNav u-noSelect"
+    div class="mainNav-ribbon u-clearfix"
+      - if user_signed_in?
+        / Top left menu
+        ul class="mainNav-group mainNav-group--left u-list--unbulleted u-flush"
+          li.mainNav-menuItem
+            = link_to "", root_path, :class => "mainNav-menuItem-link mainNav-menuItem-link--brand"
+          
+          li.mainNav-menuItem
+            = link_to "Ventures", ventures_path, :class => "mainNav-menuItem-link"
+
+          / li.mainNav-menuItem
+          /   .mainNav-menuItem-link Activitiy
+
+          li.mainNav-menuItem
+            .mainNav-menuItem-link Help
+
+
+      / Top right menu
+      ul class="mainNav-group mainNav-group--right u-list--unbulleted u-flush"
+        - if user_signed_in?
+            
+          / Inbox menu
+          / li.mainNav-menuItem
+          /   a.mainNav-menuItem-link href="#" Nachrichten
+            
+          / User menu
+          li.mainNav-menuItem
+            .dropdown
+              / Profile picture and name
+              a.mainNav-menuItem-link.mainNav-menuItem-link--user id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
+                img title="#{current_user.name}" alt="#{current_user.name}" class="avatar avatar--xs" src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/3/000/076/07f/0d01ca8.jpg"
+                = current_user.name
+                span class="caret"
+              
+              / Dropdown
+              ul class="dropdown-menu dropdown-menu--right" aria-labelledby="dLabel"
+                li = link_to "Account", account_path
+                / li = link_to "Activity", activity_path
+                li = link_to "Logout", session_path, :method => :delete
+                
+                / Admin menu
+                - if current_user.role == "admin"
+                  li = link_to "Admin", admin_path
+                - elsif session[:admin_id].present?
+                  li = link_to "Zurück zum Adminbereich", admin_path
+
+        
+        - else
+          li class="mainNav-menuItem"
+            = link_to "Login", session_path, :class => "mainNav-menuItem-link"

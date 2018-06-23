@@ -1,0 +1,58 @@
+tr data-tt-id=line data-level="main" data-identifier=title.parameterize.underscore 
+  td class="firstCell"
+    div class="rowSelect"
+      label class="rowSelect-label"
+        input type="checkbox" class="rowSelect-input js-select-for-chart"
+        span class="rowSelect-button"
+    span class="rowTitle" =title
+    
+  - vals = get_sums_for_hash(hash)
+  - sum = vals.sum
+  td.js-sum =sum.round
+  td =(sum/12).round
+  
+  - (1..12).step do |month|
+    td.js-month-data =vals[month-1]
+
+- hash.each_with_index do |(category_id, category), category_index|
+  - next if category[:name] == "dummy" && hash[category_id][:positions].size == 0
+  tr data-tt-id="#{line}.#{category_index}" data-tt-parent-id=line data-level="category" data-identifier==category_id
+    td class="firstCell"
+      div class="rowSelect"
+        label class="rowSelect-label"
+          input type="checkbox" class="rowSelect-input js-select-for-chart"
+          span class="rowSelect-button"
+      span class="rowTitle" =category[:name] == "dummy" ? "Keine Kategorie" : category[:name]
+    
+    - vals = Array.new(12, 0)
+    - hash[category_id][:positions].each do |position_id, position|
+      - position[:plan_months].each do |plan_month, value|
+        - vals[plan_month-1] += value
+    
+    - sum = vals.sum
+    td.js-sum =sum.round
+    td =(sum/12).round
+    
+    - (1..12).step do |month|
+      td.js-month-data =vals[month-1]
+
+  - hash[category_id][:positions].each_with_index do |(position_id, position), position_index|
+    tr data-tt-id="#{line}.#{category_index}.#{position_index}" data-tt-parent-id="#{line}.#{category_index}" data-level="position" data-identifier=position_id
+      td class="firstCell"
+        div class="rowSelect"
+          label class="rowSelect-label"
+            input type="checkbox" class="rowSelect-input js-select-for-chart"
+            span class="rowSelect-button"
+        span class="rowTitle" =position[:name]
+      
+      - vals = Array.new(12, 0)
+      - hash[category_id][:positions][position_id][:plan_months].each do |plan_month, value|
+        - vals[plan_month-1] += value
+    
+      - sum = vals.sum
+      td.js-sum =sum.round
+      td =(sum/12).round
+      
+      - (1..12).step do |month|
+        td.js-month-data =vals[month-1]
+      

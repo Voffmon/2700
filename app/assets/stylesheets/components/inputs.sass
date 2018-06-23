@@ -1,0 +1,206 @@
+.inputControl
+  -moz-appearance: none
+  -webkit-appearance: none
+  background-color: $paper
+  border: 1px solid $border--input
+  border-radius: 0.4rem
+  border-top-color: darken($border--input,7%)
+  box-sizing: border-box
+  color: $text
+  font-family: inherit
+  font-weight: inherit
+  line-height: inherit
+  max-width: 100%
+  outline: none
+  padding: 1rem
+  text-decoration: none
+  vertical-align: middle
+  white-space: normal
+
+.inputControl--sm
+  padding-top: 0.6rem
+  padding-bottom: 0.6rem
+  font-size: $fontSize--smallInput
+
+.inputControl--lg
+  padding: 2rem
+
+.inputControl:focus
+  border-color: $primary
+  border-width: 0.2rem
+  padding: 0.9rem
+
+.inputControl--lg:focus
+  padding: 1.9rem
+
+.inputControl--sm:focus
+  padding-top: 0.5rem
+  padding-bottom: 0.5rem
+
+// Disabled
+// --------------------------------------------------
+.inputControl--disabled
+  background-color: $shade-lighter
+  border-color: $shade-lighter
+  color: $shade-base
+
+.inputControl--disabled:focus
+  border-color: $shade-lighter
+  border-width: 0.1rem
+  padding: 1rem
+
+// Select Box
+// --------------------------------------------------
+.inputControl--select
+  background: $paper url("icon-arrow-down-small-grey.svg") no-repeat right 0.8em center
+  border-top-color: $border--input
+  border-bottom-color: darken($border--input,7%)
+  padding-right: 2.6rem
+
+.inputControl--select:focus
+  padding-right: 2.5rem
+
+// Labels
+// --------------------------------------------------
+.inputLabel
+  @include font-main--n6()
+  display: inline-block
+  margin-bottom: 5px
+  max-width: 100%
+
+// Small text additional to a label
+// --------------------------------------------------
+.inputExplanation
+  display: block
+  margin-bottom: 0.6rem
+  margin-top: 0.2rem
+
+// Custom Checkboxes
+// --------------------------------------------------
+.customCheckbox
+  display: block
+  position: relative
+
+.customCheckbox-label
+  cursor: pointer
+
+.customCheckbox-label--disabled
+  cursor: default
+
+.customCheckbox-input
+  display: none
+
+.customCheckbox-input:disabled+.customCheckbox-button
+  cursor: default
+  opacity: 0.5
+
+.customCheckbox-button
+  background-color: $paper
+  border: 1px solid rgba(0, 0, 0, 0.25)
+  border-radius: 0.3em
+  display: inline-block
+  height: 1.4em
+  margin-right: 0.2em
+  vertical-align: top
+  width: 1.4em
+
+.customCheckbox-content
+  vertical-align: top
+
+.customCheckbox-label.checked .customCheckbox-button, .customCheckbox-input:checked+.customCheckbox-button, .customCheckbox-button.customCheckbox-button--disabled-checked
+  background-color: $primary
+  border-color: rgba(0, 0, 0, 0.1)
+  box-shadow: none
+  position: relative
+
+.customCheckbox-label.checked .customCheckbox-button .customCheckbox__text, .customCheckbox-input:checked+.customCheckbox-button .customCheckbox__text, .customCheckbox-button.customCheckbox-button--disabled-checked .customCheckbox__text
+  display: none !important
+
+.customCheckbox-label.checked .customCheckbox-button:after, .customCheckbox-input:checked+.customCheckbox-button:after, .customCheckbox-button.customCheckbox-button--disabled-checked:after
+  background: url(/assets/icons/checkmark-84d079324ed7e363f659782a3fcff8d806d2590b184a54fc0f7773c8460bbd39.svg) no-repeat center center
+  background-size: 65%
+  bottom: 0
+  content: ''
+  height: 100%
+  left: 0
+  position: absolute
+  right: 0
+  top: 0
+  width: 100%
+
+.customCheckbox-label
+  -moz-user-select: none
+  -ms-user-select: none
+  -webkit-tap-highlight-color: transparent
+  -webkit-user-select: none
+  user-select: none
+
+// Custom Checkboxes
+// --------------------------------------------------
+.customRadio
+  display: block
+  position: relative
+
+.customRadio-label
+  cursor: pointer
+
+.customRadio-label--disabled
+  cursor: default
+
+.customRadio-input
+  display: none
+
+.customRadio-input:disabled+.customRadio-button
+  cursor: default
+  opacity: 0.5
+
+.customRadio-button
+  background-color: $paper
+  border: 1px solid rgba(0, 0, 0, 0.25)
+  border-radius: 0.7em
+  display: inline-block
+  height: 1.4em
+  margin-right: 0.2em
+  vertical-align: top
+  width: 1.4em
+
+.customRadio-content
+  vertical-align: top
+
+.customRadio-label.checked .customRadio-button,
+.customRadio-input:checked+.customRadio-button,
+.customRadio-button.customRadio-button--disabled-checked
+  background-color: $primary
+  border-color: rgba(0, 0, 0, 0.1)
+  border-radius: 0.7em
+  position: relative
+
+.customRadio-label.checked .customRadio-button .customRadio__text,
+.customRadio-input:checked+.customRadio-button .customRadio__text,
+.customRadio-button.customRadio-button--disabled-checked .customRadio__text
+  display: none !important
+
+.customRadio-label.checked .customRadio-button:after,
+.customRadio-input:checked+.customRadio-button:after,
+.customRadio-button.customRadio-button--disabled-checked:after
+  background-color: white
+  border-radius: 0.4em
+  bottom: 0
+  box-shadow: none
+  content: ''
+  height: 100%
+  height: 0.5em
+  left: 0.4em
+  position: absolute
+  right: 0
+  top: 0.4em
+  width: 100%
+  width: 0.5em
+
+.customRadio-label
+  -moz-user-select: none
+  -ms-user-select: none
+  -webkit-tap-highlight-color: transparent
+  -webkit-user-select: none
+  user-select: none
+

@@ -1,0 +1,107 @@
+
+
+
+/ Data from database is only required once for better performance.
+/ A hash is then built out of this data and the following code only uses the hash.
+- categories = setup.categories
+- positions = Position.where(category_id: categories.map(&:id), active_state: "active")
+- plan_months = PlanMonth.where(position_id: positions.map(&:id))
+- transactions = Transaction.where(position_id: positions.map(&:id))
+
+
+div class="expandableTable"
+  table id="preformanceTable"
+    thead
+      tr
+        th 
+          = mode.tr("_"," ").capitalize
+        th =setup.year
+        th ø Month
+        - (1..12).step do |month|
+          th =Date::MONTHNAMES[month][0..2]
+    
+    tbody
+
+      / Sales row      
+      - hash = generate_hash(mode, "sales", categories, positions, plan_months, transactions)
+      - sales = get_sums_for_hash(hash)
+      = render :partial => "table_drill_row", :locals => {line: 1, title: "Sales", hash: hash}
+      
+      / Costs of sales row
+      - hash = generate_hash(mode, "costs_of_sales", categories, positions, plan_months, transactions)
+      - costs_of_sales = get_sums_for_hash(hash)
+      = render :partial => "table_drill_row", :locals => {line: 2, title: "Costs of sales", hash: hash}
+
+      / Gross profit
+      - gross_profit = sales.zip(costs_of_sales).map {|x, y| x - y}
+      = render :partial => "table_sum_row", :locals => {line: 3, title: "Gross Profit", values: gross_profit}
+          
+      / Costs row
+      - hash = generate_hash(mode, "costs", categories, positions, plan_months, transactions)
+      - costs = get_sums_for_hash(hash)
+      = render :partial => "table_drill_row", :locals => {line: 4, title: "Costs", hash: hash}
+      
+      / Operational earnings
+      - operational_earnings = gross_profit.zip(costs).map {|x, y| x - y}
+      = render :partial => "table_sum_row", :locals => {line: 5, title: "Operational Earnings", values: operational_earnings}
+      
+      / Investments row
+      - hash = generate_hash(mode, "investments", categories, positions, plan_months, transactions)
+      - investments = get_sums_for_hash(hash)
+      = render :partial => "table_drill_row", :locals => {line: 6, title: "Investments", hash: hash}
+
+      / Operational performance
+      - operational_performance = operational_earnings.zip(investments).map {|x, y| x - y}
+      = render :partial => "table_sum_row", :locals => {line: 7, title: "Operational Performance", values: operational_performance}
+    
+      / Funding row
+      - hash = generate_hash(mode, "funding", categories, positions, plan_months, transactions)
+      - funding = get_sums_for_hash(hash)
+      = render :partial => "table_drill_row", :locals => {line: 8, title: "Funding", hash: hash}
+    
+      / VAT
+      - vat = Array.new(12,0)
+      = render :partial => "table_sum_row", :locals => {line: 9, title: "VAT", values: vat}
+
+      / Operational cash flow
+      - operational_cash_flow = operational_performance.zip(funding).map {|x, y| x - y}
+      = render :partial => "table_sum_row", :locals => {line: 10, title: "Operational Cash Flow", values: operational_cash_flow}
+
+
+
+div class="bottomCharts u-clearfix"
+  div class="bottomChart"
+    h4.u-flush
+      strong 
+        = sales.sum
+        |€
+    h3.uppercaseLabel.uppercaseLabel--light.u-flushTop
+      |Sales
+    canvas id="js-sales-doughnut" height="260"
+    
+  div class="bottomChart"
+    h4.u-flush
+      strong
+        = costs_of_sales.sum
+        |€
+    h3.uppercaseLabel.uppercaseLabel--light.u-flushTop
+      |Costs of sales
+    canvas id="js-costs-of-sales-doughnut" height="260"
+    
+  div class="bottomChart"
+    h4.u-flush
+      strong 
+        = costs.sum
+        |€
+    h3.uppercaseLabel.uppercaseLabel--light.u-flushTop
+      |Costs
+    canvas id="js-costs-doughnut" height="260"
+    
+  div class="bottomChart"
+    h4.u-flush
+      strong 
+        = investments.sum
+        |€
+    h3.uppercaseLabel.uppercaseLabel--light.u-flushTop
+      |Investments
+    canvas id="js-investments-doughnut" height="260"
